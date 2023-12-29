@@ -12,7 +12,7 @@ export default function RootLayout({ children }) {
   return (
     <html lang="en">
       <body className={inter.className}>
-        <nav className="flex justify-end gap-20 bg-black text-white h-[5vh] items-center px-10 drop-shadow-xl">
+        <nav className="flex justify-end gap-20 bg-black text-white h-[7vh] items-center px-10 drop-shadow-xl">
           <div><a className='flex font-semibold' href='/'>Home</a></div>
           <div className='grow'></div>
           <a href='/maps'>Maps</a>
