@@ -17,8 +17,8 @@ export default function AdminPage() {
         { ltd: null, lgt: null }])
         
     const { isLoaded } = useJsApiLoader({
-        id: process.env.NEXT_PUBLIC_MAP_ID,
-        googleMapsApiKey: process.env.NEXT_PUBLIC_MAPS_API_KEY
+        id: 'aa7c7b2e35e22e5e',
+        googleMapsApiKey: 'AIzaSyAdD0FtCnto1rDPxwoEIlEZxK7rojgwrE8'
     })
 
     const getKoordinate = async () => {

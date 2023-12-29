@@ -126,7 +126,8 @@ export const TablePenduduk = () => {
                             <td className='border-solid border-2 px-12 border-black text-center'>Kepala Keluarga</td>
                             <td className='border-solid border-2 px-12 border-black text-center'>RT</td>
                             <td className='border-solid border-2 px-12 border-black text-center'>Koordinat</td>
-                            <td className='border-solid border-2 border-black text-center'>Action</td>
+                            <td className='border-solid border-2 border-black text-center'>Edit</td>
+                            <td className='border-solid border-2 border-black text-center'>Delete</td>
                         </tr>
                     </thead>
 
@@ -144,7 +145,6 @@ export const TablePenduduk = () => {
                                         <td className='border-solid border-2 px-5 border-black text-center'>{e.koordinate}</td>
                                         <td className='border-solid border-2 px-5 border-black'>
                                             <FaRegEdit onClick={() => console.log('a')} />
-                                            <FaRegEdit  />
                                         </td>
                                     </tr>
                                 )
