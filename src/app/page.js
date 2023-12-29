@@ -6,6 +6,7 @@ import { collection, getDocs } from 'firebase/firestore';
 import { db } from './firebase/config';
 import getAllData from './maps/get_data';
 import Supercluster, { ClusterFeature, PointFeature } from 'supercluster';
+import "./globals.css"
 
 export default function HomePage() {
     const [ RTrumah, setRTrumah ] = useState('ALL');
@@ -14,7 +15,7 @@ export default function HomePage() {
     const [ centerLat, setCenterLat ] = useState(-6.952064121310866);
     const [ centerLng, setCenterLng ] = useState(107.67364643835181);
 
-    
+
     const containerStyle = {
         width: '100%',
         height: '93vh'
@@ -99,7 +100,7 @@ export default function HomePage() {
                 <div key={i}>
                     <MarkerF position={{lat: e.koordinate.lat, lng: e.koordinate.lon}} onClick={() => handleMarkerClick(i)}/>
                     { selectedMarkerIndex === i && (
-                        <InfoWindowF 
+                        <InfoWindowF className={'bg-black'}
                             position={{lat: e.koordinate.lat, lng: e.koordinate.lon}}
                             options={{pixelOffset: new window.google.maps.Size(0, -40)}}>
                             <div className='flex flex-col justify-center'>
@@ -145,7 +146,7 @@ export default function HomePage() {
         })}
         <>
             <div className='absolute flex flex-col right-20 bottom-10 bg-slate-800 rounded-md text-white px-10 py-3'>
-                <h1 className='font-bold'>Filter Options</h1>
+                <h1 className='font-bold mb-1 text-md'>FILTER OPTIONS</h1>
                 <div className='flex flex-row gap-3'>
                     <div className="flex flex-col place-items-center">
                         <p className="font-bold">ALL</p>

@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react";
 import { collection, getDocs } from 'firebase/firestore';
 import { db } from '../firebase/config';
-import { FaRegEdit } from "react-icons/fa";
+import { FaRegEdit, FaRegTrashAlt } from "react-icons/fa";
 
 export const TablePenduduk = () => {
     const [ data, setData ] = useState([]);
@@ -119,22 +119,26 @@ export const TablePenduduk = () => {
 
     return (
         <>
-            <div className="font-bold flex flex-col gap-10s h-[50vh] overflow-scroll">
+            <div className="font-bold flex flex-col gap-10s h-[50vh] overflow-y-scroll">
                 <table>
                     <thead className="text-[16px] bg-[#1D809F] border-2 text-white">
                         <tr>
                             <td className='border-solid border-2 px-12 border-black text-center'>Kepala Keluarga</td>
                             <td className='border-solid border-2 px-12 border-black text-center'>RT</td>
                             <td className='border-solid border-2 px-12 border-black text-center'>Koordinat</td>
-                            <td className='border-solid border-2 border-black text-center'>Edit</td>
-                            <td className='border-solid border-2 border-black text-center'>Delete</td>
+                            <td className='border-solid border-2 px-2 border-black text-center'>Edit</td>
+                            <td className='border-solid border-2 px-2 border-black text-center'>Delete</td>
                         </tr>
                     </thead>
 
                     <tbody className="bg-white text-black">
                         { data.length == 0 ? (
                             <tr>
-                                <td>Tidak Ada Data</td>
+                                <td className="px-2">Tidak Ada Data</td>
+                                <td></td>
+                                <td></td>
+                                <td></td>
+                                <td></td>
                             </tr>
                         ) : (
                             data.map((e, i) => {
@@ -145,6 +149,9 @@ export const TablePenduduk = () => {
                                         <td className='border-solid border-2 px-5 border-black text-center'>{e.koordinate}</td>
                                         <td className='border-solid border-2 px-5 border-black'>
                                             <FaRegEdit onClick={() => console.log('a')} />
+                                        </td>
+                                        <td className='border-solid border-2 px-7 border-black'>
+                                            <FaRegTrashAlt onClick={() => console.log('a')} />
                                         </td>
                                     </tr>
                                 )
