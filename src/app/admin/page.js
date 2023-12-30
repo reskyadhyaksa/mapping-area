@@ -9,10 +9,13 @@ import { db } from '../firebase/config';
 import AddKoordinat from './form';
 import InputField from './form';
 import TestingElement from './testing';
+import { useRouter } from 'next/navigation';
+import { GridCloseIcon } from '@mui/x-data-grid';
 
 
 export default function AdminPage() {
-    const [ active, setActive ] = useState(true);
+    const router = useRouter();
+    const [ active, setActive ] = useState(false);
     const [ koordinate, setKoordinate ] = useState([
         { ltd: null, lgt: null }])
         
@@ -99,6 +102,7 @@ export default function AdminPage() {
         // console.log('V :', valuesArray)
         setKoordinate(valuesArray)
     }
+    
     useEffect(() => {
         getKoordinate()
         // console.log(data)
@@ -127,23 +131,25 @@ export default function AdminPage() {
                     })}
             </GoogleMap>
 
-            <div className='absolute left-10 top-20 flex flex-col bg-[#232323] text-white justify-center'>
-                <div className='border-2 border-slate-500 w-fit px-10 py-5 self-center'>
-                    <div className='flex flex-row justify-between mb-5'>
-                        <div className='flex justify-center'>
-                            <h1 className='flex font-bold w-full text-lg'>
-                                {active ? <span>Input Field</span> : <span>Tabel List Penduduk</span>}
-                            </h1>
-                        </div>
-                        <button onClick={() => {setActive(!active)}}>
-                            <img alt='' src='../rotate.svg' className='w-5 h-5 fill-red-200'/></button>
-                    </div>
-
-                    {active ? <InputField/> : 
-                    <TablePenduduk/>
-                    }
+            <div className='absolute left-10 top-20 flex flex-col  rounded-md text-white justify-center'>
+                <div className='flex gap-2 mb-5'>
+                    <button className='bg-[#232323] rounded-md px-5 py-1' onClick={() => setActive(true)}>Add Data</button>
+                    <button className='bg-[#232323] rounded-md px-5 py-1' onClick={() => router.refresh()}>Refresh Maps</button>
+                    <button className='bg-[#232323] rounded-md px-5 py-1' onClick={() => router.push('/admin/table')}>Data list table</button>
                 </div>
+                {active && 
+                    <div className='bg-[#f3f3f3] rounded-md border-2 border-black pl-10 pr-8 py-5 text-black'>
+                        <div className="flex justify-between">
+                            <h1 className='font-bold text-xl'>Input New Data</h1>
+                            <GridCloseIcon onClick={() => setActive(false)}/>
+                        </div>
+                        <hr className="border-black w-full mt-2 mb-5"/>
+                        <InputField/>
+                    </div>
+                }
             </div>
+            
         </div>
+        
     ) : <></>
 }

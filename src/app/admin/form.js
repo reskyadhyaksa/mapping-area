@@ -5,7 +5,10 @@ import { addDoc, collection } from "firebase/firestore";
 import { app, db } from "../firebase/config";
 import { useState } from "react";
 import Validation from "./validation";
+import { ToastContainer, toast } from "react-toastify";
 import { useRouter } from "next/navigation";
+import 'react-toastify/dist/ReactToastify.css'
+
 
 
 export default function InputField() {
@@ -91,10 +94,24 @@ export default function InputField() {
         data.splice(index, 1)
         setAnggotaFields(data)
     }
+    
+    const notify = () => {
+        toast.success('Data added successfully...', {
+            position: "top-right",
+            autoClose: 1500,
+            hideProgressBar: false,
+            closeOnClick: true,
+            pauseOnHover: true,
+            draggable: true,
+            progress: undefined,
+            theme: "light",
+            });
+    }
 
     const refreshMsgState = () => {
         setMsgState('')
-        // router.refresh()
+        router.push('/admin/table')
+        location.reload()
     }
 
     return (
@@ -188,9 +205,11 @@ export default function InputField() {
                     </div>
                 </div> 
 
-                {MsgState === 'Berhasil Menambahkan Data...' && <p className="font-bold text-green-500 text-sm text-center" onLoad={setTimeout(refreshMsgState, 3000)}>{MsgState}</p>}
+                {MsgState === 'Berhasil Menambahkan Data...' && <p className="font-bold text-green-500 text-sm text-center" onLoad={setTimeout(refreshMsgState, 1500)}>{MsgState}</p>}
                 <br />
-                <button onClick={submit}>Submit</button>
+                <button onClick={() => {submit(); notify()}} className="bg-[#232323] text-white px-3 py-1 w-fit self-center rounded-sm">Submit</button>
+                <ToastContainer position="top-right"  autoClose={1500} hideProgressBar={false} newestOnTop={false} closeOnClick rtl={false}
+                    pauseOnFocusLoss draggable pauseOnHover theme="light"/>
             </div>
         </>
     )

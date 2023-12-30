@@ -4,7 +4,7 @@ import { GoogleMap, useJsApiLoader, MarkerF, InfoWindowF } from '@react-google-m
 import { useEffect, useState } from 'react';
 import { collection, getDocs } from 'firebase/firestore';
 import { db } from './firebase/config';
-import getAllData from './maps/get_data';
+import getAllData from './handler/get_data';
 import Supercluster, { ClusterFeature, PointFeature } from 'supercluster';
 import "./globals.css"
 
