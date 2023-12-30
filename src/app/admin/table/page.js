@@ -26,11 +26,22 @@ export default function PendudukPage() {
     const [ popupEdit, setPopupEdit ] = useState(false);
 
     const [ namaKepala, setNamaKepala ] = useState('');
+    const [ namaKepalaEdit, setNamaKepalaEdit ] = useState(true);
+
     const [ umurKepala, setUmurKepala ] = useState(null);
+    const [ umurKepalaEdit, setUmurKepalaEdit ] = useState(true);
+
     const [ anggotaKeluarga, setAnggotaKeluarga ] = useState([]);
+    const [ anggotaKeluargaEdit, setAnggotaKeluargaEdit ] = useState(true);
+    
     const [ alamatRumah, setAlamatRumah ] = useState('');
+    const [ alamatRumahEdit, setAlamatRumahEdit ] = useState(true);
+
     const [ koordinate, setKoordinate ] = useState('');
+    const [ koordinateEdit, setKoordinateEdit ] = useState(true);
+
     const [ potensiRumah, setPotensiRumah ] = useState(null);
+    const [ potensiRumahEdit, setPotensiRumahEdit ] = useState(true);
 
     const fetchData = async () => {
         try {
@@ -147,8 +158,23 @@ export default function PendudukPage() {
 
                     <div className="flex flex-col mt-2">
                         <h3 className="font-regular text-sm">Nama Kepala Keluarga</h3>
-                        <input required placeholder="Nama" min={1} value={selectedData.namaKepala} onChange={(e) => setNamaKepala(e.target.value)}
-                            className="nama border-2 outline-none rounded-md w-[200px] px-2 text-black" type="text"/>
+                        <div className="font-bold flex items-center justify-between">
+                            {!namaKepalaEdit ? 
+                                <div>
+                                    {selectedData.namaKepala} {selectedData.umurKepala != null && 
+                                            <span>({selectedData.umurKepala})</span>}
+                                </div> :
+                                <div>
+                                    <input required placeholder="Nama" min={1} value={namaKepala} onChange={(e) => setNamaKepala(e.target.value)}
+                                        className="nama border-2 outline-none rounded-md w-[150px] px-2 text-black" type="text"/>
+                                    <input required placeholder="Umur" 
+                                        value={umurKepala} type="number" onChange={(e) => setUmurKepala(e.target.value)}
+                                        className="nama border-2 outline-none rounded-md w-20 px-2 ml-1 text-black 
+                                            [&::-webkit-outer-spin-button]:appearance-none [&::-webkit-inner-spin-button]:appearance-none"/>
+                                </div>
+                            }
+                        <FaRegEdit className="hover:scale-125" onClick={() => setNamaKepalaEdit(!namaKepalaEdit)}/>
+                        </div>
                     </div>
 
                     <div className="flex flex-col mt-2">
