@@ -16,6 +16,41 @@ const getAllData = async () => {
         const koorArr = koordinateStr.split(',');
         const trimmedVal = koorArr.map((value) => value.trim());
         let temp_koor = {lat: parseFloat(trimmedVal[0]), lon: parseFloat(trimmedVal[1])}
+        let pathname = '';
+
+        if(index.angka_potensi == '1'){
+            pathname = 'circle1.png'
+        } else if (index.angka_potensi == '2'){
+            pathname = 'circle2.png'
+        } else if (index.angka_potensi == '3'){
+            pathname = 'circle3.png'
+        } else if (index.angka_potensi == '4'){
+            pathname = 'circle4.png'
+        } else if (index.angka_potensi == '5'){
+            pathname = 'circle5.png'
+        } else if (index.angka_potensi == '4a'){
+            pathname = 'circle6.png'
+        } else if (index.angka_potensi == '5a'){
+            pathname = 'circle7.png'
+        } else if (index.angka_potensi == '6'){
+            pathname = 'circle8.png'
+        } else if (index.angka_potensi == '6b'){
+            pathname = 'circle9.png'
+        } else if (index.angka_potensi == '7'){
+            pathname = 'circle10.png'
+        } else if (index.angka_potensi == '7a'){
+            pathname = 'circle11.png'
+        } else if (index.angka_potensi == '8'){
+            pathname = 'circle12.png'
+        } else if (index.angka_potensi == '9'){
+            pathname = 'circle13.png'
+        } else if (index.angka_potensi == '5b'){
+            pathname = 'circle14.png'
+        } else if (index.angka_potensi == '3a'){
+            pathname = 'circle15.png'
+        }
+
+
         temp_array.push({
             id: index.id,
             namaKepala: index.nama_kepala_keluarga,
@@ -26,6 +61,7 @@ const getAllData = async () => {
             koordinate: temp_koor,
             potensi: index.angka_potensi,
             RTName: 'RT01',
+            circlePath : pathname,
         })
     })
 
@@ -42,6 +78,40 @@ const getAllData = async () => {
         const koorArr = koordinateStr.split(',');
         const trimmedVal = koorArr.map((value) => value.trim());
         let temp_koor = {lat: parseFloat(trimmedVal[0]), lon: parseFloat(trimmedVal[1])}
+        let pathname = '';
+
+        if(index.angka_potensi == '1'){
+            pathname = 'circle1.png'
+        } else if (index.angka_potensi == '2'){
+            pathname = 'circle2.png'
+        } else if (index.angka_potensi == '3'){
+            pathname = 'circle3.png'
+        } else if (index.angka_potensi == '4'){
+            pathname = 'circle4.png'
+        } else if (index.angka_potensi == '5'){
+            pathname = 'circle5.png'
+        } else if (index.angka_potensi == '4a'){
+            pathname = 'circle6.png'
+        } else if (index.angka_potensi == '5a'){
+            pathname = 'circle7.png'
+        } else if (index.angka_potensi == '6'){
+            pathname = 'circle8.png'
+        } else if (index.angka_potensi == '6b'){
+            pathname = 'circle9.png'
+        } else if (index.angka_potensi == '7'){
+            pathname = 'circle10.png'
+        } else if (index.angka_potensi == '7a'){
+            pathname = 'circle11.png'
+        } else if (index.angka_potensi == '8'){
+            pathname = 'circle12.png'
+        } else if (index.angka_potensi == '9'){
+            pathname = 'circle13.png'
+        } else if (index.angka_potensi == '5b'){
+            pathname = 'circle14.png'
+        } else if (index.angka_potensi == '3a'){
+            pathname = 'circle15.png'
+        }
+
 
         temp_array.push({
             id: index.id,
@@ -53,6 +123,7 @@ const getAllData = async () => {
             koordinate: temp_koor,
             potensi: index.angka_potensi,
             RTName: 'RT02',
+            circlePath : pathname,
         })
     })
     
@@ -69,6 +140,40 @@ const getAllData = async () => {
         const koorArr = koordinateStr.split(',');
         const trimmedVal = koorArr.map((value) => value.trim());
         let temp_koor = {lat: parseFloat(trimmedVal[0]), lon: parseFloat(trimmedVal[1])}
+        let pathname = '';
+
+        if(index.angka_potensi == '1'){
+            pathname = 'circle1.png'
+        } else if (index.angka_potensi == '2'){
+            pathname = 'circle2.png'
+        } else if (index.angka_potensi == '3'){
+            pathname = 'circle3.png'
+        } else if (index.angka_potensi == '4'){
+            pathname = 'circle4.png'
+        } else if (index.angka_potensi == '5'){
+            pathname = 'circle5.png'
+        } else if (index.angka_potensi == '4a'){
+            pathname = 'circle6.png'
+        } else if (index.angka_potensi == '5a'){
+            pathname = 'circle7.png'
+        } else if (index.angka_potensi == '6'){
+            pathname = 'circle8.png'
+        } else if (index.angka_potensi == '6b'){
+            pathname = 'circle9.png'
+        } else if (index.angka_potensi == '7'){
+            pathname = 'circle10.png'
+        } else if (index.angka_potensi == '7a'){
+            pathname = 'circle11.png'
+        } else if (index.angka_potensi == '8'){
+            pathname = 'circle12.png'
+        } else if (index.angka_potensi == '9'){
+            pathname = 'circle13.png'
+        } else if (index.angka_potensi == '5b'){
+            pathname = 'circle14.png'
+        } else if (index.angka_potensi == '3a'){
+            pathname = 'circle15.png'
+        }
+
 
         temp_array.push({
             id: index.id,
@@ -80,6 +185,7 @@ const getAllData = async () => {
             koordinate: temp_koor,
             potensi: index.angka_potensi,
             RTName: 'RT03',
+            circlePath : pathname,
         })
     })
     
@@ -96,9 +202,43 @@ const getAllData = async () => {
         const koorArr = koordinateStr.split(',');
         const trimmedVal = koorArr.map((value) => value.trim());
         let temp_koor = {lat: parseFloat(trimmedVal[0]), lon: parseFloat(trimmedVal[1])}
+        let pathname = '';
+
+        if(index.angka_potensi == '1'){
+            pathname = 'circle1.png'
+        } else if (index.angka_potensi == '2'){
+            pathname = 'circle2.png'
+        } else if (index.angka_potensi == '3'){
+            pathname = 'circle3.png'
+        } else if (index.angka_potensi == '4'){
+            pathname = 'circle4.png'
+        } else if (index.angka_potensi == '5'){
+            pathname = 'circle5.png'
+        } else if (index.angka_potensi == '4a'){
+            pathname = 'circle6.png'
+        } else if (index.angka_potensi == '5a'){
+            pathname = 'circle7.png'
+        } else if (index.angka_potensi == '6'){
+            pathname = 'circle8.png'
+        } else if (index.angka_potensi == '6b'){
+            pathname = 'circle9.png'
+        } else if (index.angka_potensi == '7'){
+            pathname = 'circle10.png'
+        } else if (index.angka_potensi == '7a'){
+            pathname = 'circle11.png'
+        } else if (index.angka_potensi == '8'){
+            pathname = 'circle12.png'
+        } else if (index.angka_potensi == '9'){
+            pathname = 'circle13.png'
+        } else if (index.angka_potensi == '5b'){
+            pathname = 'circle14.png'
+        } else if (index.angka_potensi == '3a'){
+            pathname = 'circle15.png'
+        }
+
 
         temp_array.push({
-            id:index.id,
+            id: index.id,
             namaKepala: index.nama_kepala_keluarga,
             umurKepala: index.umur_kepala_keluarga,
             namaAnggota: index.anggota_keluarga,
@@ -107,6 +247,7 @@ const getAllData = async () => {
             koordinate: temp_koor,
             potensi: index.angka_potensi,
             RTName: 'RT04',
+            circlePath : pathname,
         })
     })
 
@@ -123,6 +264,40 @@ const getAllData = async () => {
         const koorArr = koordinateStr.split(',');
         const trimmedVal = koorArr.map((value) => value.trim());
         let temp_koor = {lat: parseFloat(trimmedVal[0]), lon: parseFloat(trimmedVal[1])}
+        let pathname = '';
+
+        if(index.angka_potensi == '1'){
+            pathname = 'circle1.png'
+        } else if (index.angka_potensi == '2'){
+            pathname = 'circle2.png'
+        } else if (index.angka_potensi == '3'){
+            pathname = 'circle3.png'
+        } else if (index.angka_potensi == '4'){
+            pathname = 'circle4.png'
+        } else if (index.angka_potensi == '5'){
+            pathname = 'circle5.png'
+        } else if (index.angka_potensi == '4a'){
+            pathname = 'circle6.png'
+        } else if (index.angka_potensi == '5a'){
+            pathname = 'circle7.png'
+        } else if (index.angka_potensi == '6'){
+            pathname = 'circle8.png'
+        } else if (index.angka_potensi == '6b'){
+            pathname = 'circle9.png'
+        } else if (index.angka_potensi == '7'){
+            pathname = 'circle10.png'
+        } else if (index.angka_potensi == '7a'){
+            pathname = 'circle11.png'
+        } else if (index.angka_potensi == '8'){
+            pathname = 'circle12.png'
+        } else if (index.angka_potensi == '9'){
+            pathname = 'circle13.png'
+        } else if (index.angka_potensi == '5b'){
+            pathname = 'circle14.png'
+        } else if (index.angka_potensi == '3a'){
+            pathname = 'circle15.png'
+        }
+
 
         temp_array.push({
             id: index.id,
@@ -134,6 +309,7 @@ const getAllData = async () => {
             koordinate: temp_koor,
             potensi: index.angka_potensi,
             RTName: 'RT05',
+            circlePath : pathname,
         })
     })
 
@@ -150,6 +326,40 @@ const getAllData = async () => {
         const koorArr = koordinateStr.split(',');
         const trimmedVal = koorArr.map((value) => value.trim());
         let temp_koor = {lat: parseFloat(trimmedVal[0]), lon: parseFloat(trimmedVal[1])}
+        let pathname = '';
+
+        if(index.angka_potensi == '1'){
+            pathname = 'circle1.png'
+        } else if (index.angka_potensi == '2'){
+            pathname = 'circle2.png'
+        } else if (index.angka_potensi == '3'){
+            pathname = 'circle3.png'
+        } else if (index.angka_potensi == '4'){
+            pathname = 'circle4.png'
+        } else if (index.angka_potensi == '5'){
+            pathname = 'circle5.png'
+        } else if (index.angka_potensi == '4a'){
+            pathname = 'circle6.png'
+        } else if (index.angka_potensi == '5a'){
+            pathname = 'circle7.png'
+        } else if (index.angka_potensi == '6'){
+            pathname = 'circle8.png'
+        } else if (index.angka_potensi == '6b'){
+            pathname = 'circle9.png'
+        } else if (index.angka_potensi == '7'){
+            pathname = 'circle10.png'
+        } else if (index.angka_potensi == '7a'){
+            pathname = 'circle11.png'
+        } else if (index.angka_potensi == '8'){
+            pathname = 'circle12.png'
+        } else if (index.angka_potensi == '9'){
+            pathname = 'circle13.png'
+        } else if (index.angka_potensi == '5b'){
+            pathname = 'circle14.png'
+        } else if (index.angka_potensi == '3a'){
+            pathname = 'circle15.png'
+        }
+
 
         temp_array.push({
             id: index.id,
@@ -161,6 +371,7 @@ const getAllData = async () => {
             koordinate: temp_koor,
             potensi: index.angka_potensi,
             RTName: 'RT06',
+            circlePath : pathname,
         })
     })
     

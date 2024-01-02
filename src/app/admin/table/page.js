@@ -14,6 +14,7 @@ import { ToastContainer, toast } from "react-toastify";
 import 'react-toastify/dist/ReactToastify.css'
 import { useRouter } from "next/navigation";
 import InputField from "../form";
+import PopupInformation from "./add_information";
 
 
 
@@ -24,14 +25,17 @@ export default function PendudukPage() {
     const [ popupDelete, setPopupDelete ] = useState(false);
     const [ popupAdd, setPopupAdd ] = useState(false);
     const [ popupEdit, setPopupEdit ] = useState(false);
+    const [ popupInfo, setPopupInfo ] = useState(false);
 
     const [ namaKepala, setNamaKepala ] = useState('');
-    const [ namaKepalaEdit, setNamaKepalaEdit ] = useState(true);
+    const [ namaKepalaEdit, setNamaKepalaEdit ] = useState(false);
 
     const [ umurKepala, setUmurKepala ] = useState(null);
     const [ umurKepalaEdit, setUmurKepalaEdit ] = useState(true);
 
-    const [ anggotaKeluarga, setAnggotaKeluarga ] = useState([]);
+    const [ AnggotaFields, setAnggotaFields ] = useState([
+        { name: '', age: '' },
+    ])
     const [ anggotaKeluargaEdit, setAnggotaKeluargaEdit ] = useState(true);
     
     const [ alamatRumah, setAlamatRumah ] = useState('');
@@ -57,7 +61,7 @@ export default function PendudukPage() {
         if ( selectedData.length > 0 ) {
             setNamaKepala(selectedData.namaKepala)
             setUmurKepala(selectedData.umurKepala)
-            setAnggotaKeluarga(selectedData.namaAnggota)
+            setAnggotaFields(selectedData.namaAnggota)
             setAlamatRumah(selectedData.alamat)
             setPotensiRumah(selectedData.potensi)
         }
@@ -93,9 +97,34 @@ export default function PendudukPage() {
         setPopupDelete(false)
         setSelectedData([])
         fetchData();
+        
     }
     
+    const handleAnggotaChange = (event, index) => {
+        let data = [...AnggotaFields];
+        data[index][event.target.name] = event.target.value;
+        setAnggotaFields(data);
+    }
 
+    const submitHandler = (e) => {
+        e.preventDefault();
+        console.log(AnggotaFields)
+    }
+
+    const addFields = () => {
+        let object = {
+            name: '',
+            age: ''
+        }
+
+        setAnggotaFields([...AnggotaFields, object])
+    }
+
+    const removeFields = (index) => {
+        let data = [...AnggotaFields];
+        data.splice(index, 1)
+        setAnggotaFields(data)
+    }
 
     return(
         <>
@@ -179,12 +208,20 @@ export default function PendudukPage() {
 
                     <div className="flex flex-col mt-2">
                         <h3 className="font-regular text-sm">Anggota Keluarga </h3>
-                        <h6 className="font-bold">
-                        {selectedData.namaAnggota?.map((row, index)=> {
-                                            return (
-                                                <div key={index}>{row.name} {row.age != '' && <span>({row.age})</span>}</div>
-                                        )})}
-                        </h6>
+                        <div>
+                            {anggotaKeluargaEdit ? 
+                                <h6 className="font-bold">
+                                {selectedData.anggotaKeluarga?.length ? <span>Tidak ada data anggota</span> : 
+                                    <span>{selectedData.namaAnggota?.map((row, index)=> {
+                                        return (
+                                            <div key={index}>{row.name} {row.age != '' && <span>({row.age})</span>}</div>)})}
+                                    </span>}
+                                </h6> : 
+                                <div>False</div>}
+
+                        </div>
+                        <FaRegEdit className="hover:scale-125" onClick={() => setAnggotaKeluargaEdit(!anggotaKeluargaEdit)}/>
+                        
                     </div>
 
                     <div className="flex flex-col mt-2">
@@ -204,9 +241,9 @@ export default function PendudukPage() {
 
                     <div className="flex justify-center gap-1">
                         <button className="bg-[#232323] text-white px-3 py-1 text-sm rounded-sm"
-                            onClick={() => {deleteData(selectedData); handleDeleteButton(); notify()}}>Delete</button>
+                            onClick={() => {console.log(a)}}>Edit</button>
                         <button className="bg-red-300 text-black px-3 py-1 text-sm rounded-sm"
-                            onClick={() => setPopupDelete(false)}>Cancel</button>
+                            onClick={() => setPopupEdit(false)}>Cancel</button>
                     </div>
                 </div>
             }
@@ -222,12 +259,23 @@ export default function PendudukPage() {
                 </div>
             }
 
-
+            {popupInfo && popupDelete != true && popupEdit != true && popupAdd != true &&
+                <div className="absolute bg-[#f3f3f3] left-[40%] top-[10%] px-5 rounded-md py-5">
+                    <div className="flex justify-between">
+                        <h1 className="font-bold text-xl">Add data</h1>
+                        <GridCloseIcon onClick={() => setPopupAdd(false)} className="hover:scale-125"/>
+                    </div>
+                    <hr className="border-black w-full mt-1 mb-3"/>
+                    <PopupInformation/>
+            </div>
+            }
 
             
             <div className="py-5 px-16">
                 <button className="px-3 py-1 bg-[#232323] text-white rounded-md text-md"
                     onClick={() => setPopupAdd(true)}>Add data</button>
+                <button className="px-3 py-1 bg-[#232323] text-white rounded-md text-md ml-2 mb-2"
+                    onClick={() => setPopupInfo(true)}>Add Information Potential</button>
                 <button className="px-3 py-1 bg-[#232323] text-white rounded-md text-md ml-2 mb-2"
                     onClick={() => router.push('/admin')}>Back to maps</button>
                 <TableContainer component={Paper}>

@@ -1,7 +1,7 @@
 /* eslint-disable @next/next/no-img-element */
 'use client'
 
-import { GoogleMap, useJsApiLoader, MarkerF } from '@react-google-maps/api';
+import { GoogleMap, useJsApiLoader, MarkerF, Marker, InfoWindowF } from '@react-google-maps/api';
 import { useEffect, useState } from 'react';
 import { TablePenduduk } from './table_penduduk';
 import { collection, getDocs } from 'firebase/firestore';
@@ -11,11 +11,16 @@ import InputField from './form';
 import TestingElement from './testing';
 import { useRouter } from 'next/navigation';
 import { GridCloseIcon } from '@mui/x-data-grid';
+import getAllData from '../handler/get_data';
 
 
 export default function AdminPage() {
     const router = useRouter();
     const [ active, setActive ] = useState(false);
+    const [ dataArr, setAllData ] = useState([]);
+    const [ selectedMarkerIndex, setSelectedMarkerIndex] = useState(null);
+    const [ centerLat, setCenterLat ] = useState(-6.952064121310866);
+    const [ centerLng, setCenterLng ] = useState(107.67364643835181);
     const [ koordinate, setKoordinate ] = useState([
         { ltd: null, lgt: null }])
         
@@ -102,9 +107,27 @@ export default function AdminPage() {
         // console.log('V :', valuesArray)
         setKoordinate(valuesArray)
     }
+
+    const handleMarkerClick = (index) => {
+        // setOpenPop(!openPop);
+        setSelectedMarkerIndex(index);
+        setCenterLat(dataArr[index].koordinate.lat);
+        setCenterLng(dataArr[index].koordinate.lon);
+
+    };
+
+    const fetchData = async () => {
+        try {
+            const result = await getAllData();
+            setAllData(result);
+        } catch (error) {
+            console.error('Error fetching data:', error);
+        }
+    };
     
     useEffect(() => {
-        getKoordinate()
+        // getKoordinate()
+        fetchData()
         // console.log(data)
     }, [])
 
@@ -118,14 +141,61 @@ export default function AdminPage() {
                         mapTypeControl: false,
                         clickableIcons: false,}}
                     zoom={17}
-                    className={`border-2`}
-                >
+                    className={`border-2`}>
                     { /* Child components, such as markers, info windows, etc. */ }
-                    {koordinate.map((e, i) => {
+                    {dataArr.map((e, i) => {
                         return(
                             <div key={i}>
-                                <MarkerF key={e} position={{lat: parseFloat(e[0]), lng: parseFloat(e[1])}}/>
-                                {/* {console.log(e[1])} */}
+                                <Marker position={{lat: e.koordinate.lat, lng: e.koordinate.lon}} onClick={() => handleMarkerClick(i)} 
+                                    options={{
+                                        icon: {
+                                            url: e.circlePath,
+                                            fillColor: '#232323',
+                                            scaledSize: new window.google.maps.Size(10, 10),
+                                        },
+                                }}/>
+                                { selectedMarkerIndex === i && (
+                                    <InfoWindowF className={'bg-black'}
+                                        position={{lat: e.koordinate.lat, lng: e.koordinate.lon}}
+                                        options={{pixelOffset: new window.google.maps.Size(0, -40)}}>
+                                        <div className='flex flex-col justify-center'>
+                                            <h1 className='font-bold mb-3 text-center'>Marker Information</h1>
+                                            <section>Nama Kepala Keluarga <br/>
+                                                <span className='font-bold'>{e.namaKepala}
+                                                {e.umurKepala > 0 && <span> ( {e.umurKepala} Tahun ) </span>}
+                                                </span>
+                                            </section>
+
+                                            <section className='mt-2'>Alamat Rumah<br/>
+                                                { e.alamat != "" ? 
+                                                    <p className='font-bold'>{e.alamat}</p>
+                                                    : <p className='font-bold'>Tidak ada data alamat</p>}
+                                            </section>
+                                            
+                                            <section className='mt-2'>Angka Potensi<br/>
+                                                { e.potensi != '' ? 
+                                                    <p className='font-bold'>{e.potensi}</p>
+                                                    : <p className='font-bold'>Tidak ada data potensi</p>}
+                                            </section>  
+
+                                            <section className='mt-2'>Anggota Keluarga<br/>
+                                                { e.namaAnggota[0].name != "" ? 
+                                                    <div className='flex flex-col font-bold'>
+                                                        {e.namaAnggota.map((anggota, anggotaIndex) => (
+                                                        <p key={anggotaIndex}>
+                                                            {anggota.name}{' '}
+                                                            {anggota.age != '' && (
+                                                            <span> ( {anggota.age} Tahun )</span>
+                                                            )}
+                                                        </p>
+                                                        ))}
+                                                    </div>
+                                                    : <p className='font-bold'>Tidak ada data anggota</p>}
+                                            </section>  
+
+                                        </div>
+                                    </InfoWindowF>
+                                )}
                             </div>
                         )
                     })}

@@ -1,6 +1,6 @@
 'use client'
 
-import { GoogleMap, useJsApiLoader, MarkerF, InfoWindowF } from '@react-google-maps/api';
+import { GoogleMap, useJsApiLoader, MarkerF, InfoWindowF, Marker } from '@react-google-maps/api';
 import { useEffect, useState } from 'react';
 import { collection, getDocs } from 'firebase/firestore';
 import { db } from './firebase/config';
@@ -14,6 +14,7 @@ export default function HomePage() {
     const [ selectedMarkerIndex, setSelectedMarkerIndex] = useState(null);
     const [ centerLat, setCenterLat ] = useState(-6.952064121310866);
     const [ centerLng, setCenterLng ] = useState(107.67364643835181);
+    
 
 
     const containerStyle = {
@@ -63,15 +64,52 @@ export default function HomePage() {
             const koorArr = koordinateStr.split(',');
             const trimmedVal = koorArr.map((value) => value.trim());
             let temp_koor = {lat: parseFloat(trimmedVal[0]), lon: parseFloat(trimmedVal[1])}
+            let pathname = '';
+
+            if(index.angka_potensi == '1'){
+                pathname = 'circle1.png'
+            } else if (index.angka_potensi == '2'){
+                pathname = 'circle2.png'
+            } else if (index.angka_potensi == '3'){
+                pathname = 'circle3.png'
+            } else if (index.angka_potensi == '4'){
+                pathname = 'circle4.png'
+            } else if (index.angka_potensi == '5'){
+                pathname = 'circle5.png'
+            } else if (index.angka_potensi == '4a'){
+                pathname = 'circle6.png'
+            } else if (index.angka_potensi == '5a'){
+                pathname = 'circle7.png'
+            } else if (index.angka_potensi == '6'){
+                pathname = 'circle8.png'
+            } else if (index.angka_potensi == '6b'){
+                pathname = 'circle9.png'
+            } else if (index.angka_potensi == '7'){
+                pathname = 'circle10.png'
+            } else if (index.angka_potensi == '7a'){
+                pathname = 'circle11.png'
+            } else if (index.angka_potensi == '8'){
+                pathname = 'circle12.png'
+            } else if (index.angka_potensi == '9'){
+                pathname = 'circle13.png'
+            } else if (index.angka_potensi == '5b'){
+                pathname = 'circle14.png'
+            } else if (index.angka_potensi == '3a'){
+                pathname = 'circle15.png'
+            }
+    
     
             temp_array.push({
+                id: index.id,
                 namaKepala: index.nama_kepala_keluarga,
                 umurKepala: index.umur_kepala_keluarga,
                 namaAnggota: index.anggota_keluarga,
                 alamat: index.alamat,
                 jumlahAnggota: index.jumlah_anggota_keluarga,
                 koordinate: temp_koor,
-                potensi: index.angka_potensi
+                potensi: index.angka_potensi,
+                RTName: 'RT01',
+                circlePath : pathname,
             })
         })
         
@@ -98,7 +136,15 @@ export default function HomePage() {
         {dataArray.map((e, i) => {
             return(
                 <div key={i}>
-                    <MarkerF position={{lat: e.koordinate.lat, lng: e.koordinate.lon}} onClick={() => handleMarkerClick(i)}/>
+                    <Marker position={{lat: e.koordinate.lat, lng: e.koordinate.lon}} onClick={() => handleMarkerClick(i)} 
+                        options={{
+                            icon: {
+                                url: e.circlePath,
+                                fillColor: '#232323',
+                                scaledSize: new window.google.maps.Size(10, 10),
+                            },
+                        }}
+                    />
                     { selectedMarkerIndex === i && (
                         <InfoWindowF className={'bg-black'}
                             position={{lat: e.koordinate.lat, lng: e.koordinate.lon}}
@@ -118,7 +164,7 @@ export default function HomePage() {
                                 </section>
                                 
                                 <section className='mt-2'>Angka Potensi<br/>
-                                    { e.potensi > 0 ? 
+                                    { e.potensi != '' ? 
                                         <p className='font-bold'>{e.potensi}</p>
                                         : <p className='font-bold'>Tidak ada data potensi</p>}
                                 </section>  

@@ -16,6 +16,7 @@ export default function RootLayout({ children }) {
           <div><a className='flex font-semibold' href='/'>CIPAMOKOLAN MAP</a></div>
           <div className='grow'></div>
           <a href='/'>Home</a>
+          <a href='/info'>Information</a>
           <a href="/login">Login</a>
         </nav>
 

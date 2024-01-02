@@ -11,7 +11,7 @@ import 'react-toastify/dist/ReactToastify.css'
 
 
 
-export default function InputField() {
+export default function EditField( array ) {
     const router = useRouter();
     const [ MsgState, setMsgState] = useState('')
     const [ MsgState2, setMsgState2] = useState('')
@@ -151,16 +151,6 @@ export default function InputField() {
             setFinalPotensi('8');
         } else if (AngkaPotensi === '4' && AngkaPotensi2 === '5' || AngkaPotensi === '5' && AngkaPotensi2 === '4') {
             setFinalPotensi('9');
-        } else if (AngkaPotensi === '1') {
-            setFinalPotensi('1');
-        } else if (AngkaPotensi === '2') {
-            setFinalPotensi('2');
-        } else if (AngkaPotensi === '3') {
-            setFinalPotensi('3');
-        } else if (AngkaPotensi === '4') {
-            setFinalPotensi('4');
-        } else if (AngkaPotensi === '5') {
-            setFinalPotensi('5');
         }
     }, [AngkaPotensi, AngkaPotensi2])
 
