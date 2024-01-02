@@ -57,6 +57,9 @@ export default function PendudukPage() {
     };
 
     useEffect(() => {
+        if( sessionStorage.getItem('user') == null ) {
+            router.push('/login')
+        }
         fetchData();
         if ( selectedData.length > 0 ) {
             setNamaKepala(selectedData.namaKepala)
@@ -274,8 +277,6 @@ export default function PendudukPage() {
             <div className="py-5 px-16">
                 <button className="px-3 py-1 bg-[#232323] text-white rounded-md text-md"
                     onClick={() => setPopupAdd(true)}>Add data</button>
-                <button className="px-3 py-1 bg-[#232323] text-white rounded-md text-md ml-2 mb-2"
-                    onClick={() => setPopupInfo(true)}>Add Information Potential</button>
                 <button className="px-3 py-1 bg-[#232323] text-white rounded-md text-md ml-2 mb-2"
                     onClick={() => router.push('/admin')}>Back to maps</button>
                 <TableContainer component={Paper}>

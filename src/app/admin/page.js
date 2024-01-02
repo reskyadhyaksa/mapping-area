@@ -1,23 +1,22 @@
 /* eslint-disable @next/next/no-img-element */
 'use client'
 
-import { GoogleMap, useJsApiLoader, MarkerF, Marker, InfoWindowF } from '@react-google-maps/api';
+import { GoogleMap, useJsApiLoader, Marker, InfoWindowF } from '@react-google-maps/api';
 import { useEffect, useState } from 'react';
-import { TablePenduduk } from './table_penduduk';
 import { collection, getDocs } from 'firebase/firestore';
-import { db } from '../firebase/config';
-import AddKoordinat from './form';
+import { auth, db } from '../firebase/config';
 import InputField from './form';
-import TestingElement from './testing';
 import { useRouter } from 'next/navigation';
 import { GridCloseIcon } from '@mui/x-data-grid';
 import getAllData from '../handler/get_data';
+import { onAuthStateChanged } from 'firebase/auth';
 
 
 export default function AdminPage() {
     const router = useRouter();
     const [ active, setActive ] = useState(false);
     const [ dataArr, setAllData ] = useState([]);
+    const [ auth, setAuth ] = useState(null);
     const [ selectedMarkerIndex, setSelectedMarkerIndex] = useState(null);
     const [ centerLat, setCenterLat ] = useState(-6.952064121310866);
     const [ centerLng, setCenterLng ] = useState(107.67364643835181);
@@ -126,9 +125,14 @@ export default function AdminPage() {
     };
     
     useEffect(() => {
+        if( sessionStorage.getItem('user') == null ) {
+            router.push('/login')
+        }
         // getKoordinate()
-        fetchData()
         // console.log(data)
+        console.log(sessionStorage.getItem('user'))
+
+        fetchData()
     }, [])
 
     return isLoaded ? (
