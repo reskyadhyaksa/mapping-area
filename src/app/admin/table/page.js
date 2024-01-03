@@ -194,7 +194,7 @@ export default function PendudukPage() {
         setAnggotaFields2(row.namaAnggota)
         setAlamatRumah2(row.alamat)
         setPotensiRumah2(row.potensi)
-        setKoordinate2(row.koordinate.lat, row.koordinate.lon)
+        setKoordinate2(row.koordinate.lat +', '+ row.koordinate.lon)
         setRTName2(row.RTName)
         setPopupEdit(!popupEdit)
     }
