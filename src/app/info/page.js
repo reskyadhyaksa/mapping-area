@@ -114,7 +114,7 @@ export default function InformationPage() {
     }
 
     const notify = () => {
-        toast.success('Data added successfully...', {
+        toast.success('Data changed successfully...', {
             position: "top-right",
             autoClose: 1500,
             hideProgressBar: false,
