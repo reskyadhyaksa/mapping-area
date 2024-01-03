@@ -15,6 +15,8 @@ import 'react-toastify/dist/ReactToastify.css'
 import { useRouter } from "next/navigation";
 import InputField from "../form";
 import PopupInformation from "./add_information";
+import { doc, updateDoc } from "firebase/firestore";
+import { db } from "@/app/firebase/config";
 
 
 
@@ -26,6 +28,8 @@ export default function PendudukPage() {
     const [ popupAdd, setPopupAdd ] = useState(false);
     const [ popupEdit, setPopupEdit ] = useState(false);
     const [ popupInfo, setPopupInfo ] = useState(false);
+
+    const [ SelectID, setSelectID ] = useState('');
 
     const [ namaKepala, setNamaKepala ] = useState('');
     const [ namaKepala2, setNamaKepala2 ] = useState('');
@@ -89,6 +93,7 @@ export default function PendudukPage() {
         fetchData();
 
         if ( selectedData.id != null ) {
+            setSelectID(selectedData.id)
             setNamaKepala2(selectedData.namaKepala)
             setUmurKepala2(selectedData.umurKepala)
             setAnggotaFields2(selectedData.namaAnggota)
@@ -130,8 +135,44 @@ export default function PendudukPage() {
         }
     }, [AngkaPotensi, AngkaPotensi2, selectedData]);
 
-    const handleEdit = (row) => {
-        console.log(row)
+    const handleEdit = async (row) => {
+        if (SelectID != ''){
+            const docRef = doc(db, RTName2, SelectID);
+            try {
+                await updateDoc(docRef, {
+                    nama_kepala_keluarga: namaKepala2,
+                    umur_kepala: umurKepala2,
+                    koordinate: koordinate2,
+                    anggota_keluarga: AnggotaFields2,
+                    jumlah_anggota: AnggotaFields2.length,
+                    angka_potensi: potensiRumah2,
+                    alamat: alamatRumah2,
+                })
+                toast.success('Data Edit successfully', {
+                    position: "top-right",
+                    autoClose: 1500,
+                    hideProgressBar: false,
+                    closeOnClick: true,
+                    pauseOnHover: true,
+                    draggable: true,
+                    progress: undefined,
+                    theme: "light",
+                });
+                setPopupEdit(false)
+                setSelectID('')
+                setNamaKepala2('')
+                setUmurKepala2(null)
+                setAnggotaFields2([
+                    { name: '', age: '' },
+                ])
+                setAlamatRumah2('')
+                setPotensiRumah2('')
+                setRTName2('')
+                fetchData()
+            } catch (e){
+                console.log(e)
+            }
+        }
     }
 
     const handlePopUpDelete = (row) => {
@@ -423,7 +464,7 @@ export default function PendudukPage() {
 
                     <div className="flex justify-center gap-1 mt-10">
                         <button className="bg-[#232323] text-white px-3 py-1 text-sm rounded-sm"
-                            onClick={() => {console.log(namaKepala2, umurKepala2, AnggotaFields2, koordinate2, alamatRumah2, potensiRumah2, RTName2)}}>Edit</button>
+                            onClick={() => {console.log(SelectID, namaKepala2, umurKepala2, AnggotaFields2, koordinate2, alamatRumah2, potensiRumah2, RTName2); handleEdit()}}>Edit</button>
                         <button className="bg-red-300 text-black px-3 py-1 text-sm rounded-sm"
                             onClick={() => setPopupEdit(false)}>Cancel</button>
                     </div>
