@@ -404,7 +404,7 @@ export default function InformationPage() {
                                 }
                                 {user && <FaRegEdit className="hover:scale-125 ml-2" onClick={()=> setEdit14(!edit14)}/>}
                             </div>
-                            { edit14 && <button className="mt-2" onClick={() => {handleUpdate(potensi[13], editText14); notify(); setTimeout(location.reload(), 5000)}}>Submit</button>}
+                            { edit14 && <button className="mt-2" onClick={() => {handleUpdate(potensi[13], editText14); notify();}}>Submit</button>}
                         </div>
                     </div>
                     <div className="border-2 border-black w-[400px] h-[125px] flex flex-col justify-center place-items-center">
