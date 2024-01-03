@@ -92,15 +92,15 @@ export default function PendudukPage() {
         }
         fetchData();
 
-        if ( selectedData.id != null ) {
-            setSelectID(selectedData.id)
-            setNamaKepala2(selectedData.namaKepala)
-            setUmurKepala2(selectedData.umurKepala)
-            setAnggotaFields2(selectedData.namaAnggota)
-            setAlamatRumah2(selectedData.alamat)
-            setPotensiRumah2(selectedData.potensi)
-            setRTName2(selectedData.RTName)
-        }
+        // if ( selectedData.id != null ) {
+        //     setSelectID(selectedData.id)
+        //     setNamaKepala2(selectedData.namaKepala)
+        //     setUmurKepala2(selectedData.umurKepala)
+        //     setAnggotaFields2(selectedData.namaAnggota)
+        //     setAlamatRumah2(selectedData.alamat)
+        //     setPotensiRumah2(selectedData.potensi)
+        //     setRTName2(selectedData.RTName)
+        // }
 
         if (AngkaPotensi === '1' && AngkaPotensi2 === '2') {
             setPotensiRumah2('3a');
@@ -133,7 +133,7 @@ export default function PendudukPage() {
         } else if (AngkaPotensi === '5') {
             setPotensiRumah2('5');
         }
-    }, [AngkaPotensi, AngkaPotensi2, selectedData]);
+    }, [AngkaPotensi, AngkaPotensi2]);
 
     const handleEdit = async (row) => {
         if (SelectID != ''){
@@ -168,6 +168,12 @@ export default function PendudukPage() {
                 setAlamatRumah2('')
                 setPotensiRumah2('')
                 setRTName2('')
+                setNamaKepalaEdit(true)
+                setAnggotaKeluargaEdit(true)
+                setAlamatRumahEdit(true)
+                setKoordinateEdit(true)
+                setPotensiRumahEdit(true)
+                setRTNameEdit(true)
                 fetchData()
             } catch (e){
                 console.log(e)
@@ -182,6 +188,14 @@ export default function PendudukPage() {
 
     const handlePopUpEdit = (row) => {
         setSelectedData(row);
+        setSelectID(row.id)
+        setNamaKepala2(row.namaKepala)
+        setUmurKepala2(row.umurKepala)
+        setAnggotaFields2(row.namaAnggota)
+        setAlamatRumah2(row.alamat)
+        setPotensiRumah2(row.potensi)
+        setKoordinate2(row.koordinate.lat, row.koordinate.lon)
+        setRTName2(row.RTName)
         setPopupEdit(!popupEdit)
     }
 
