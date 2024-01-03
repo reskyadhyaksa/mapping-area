@@ -197,6 +197,7 @@ export default function PendudukPage() {
         setKoordinate2(row.koordinate.lat +', '+ row.koordinate.lon)
         setRTName2(row.RTName)
         setPopupEdit(!popupEdit)
+        
     }
 
     const notify = () => {
@@ -247,7 +248,7 @@ export default function PendudukPage() {
     return(
         <>
             {popupDelete && popupAdd != true && popupEdit != true && 
-                <div className="absolute left-[40%] top-[20%] w-[300px] rounded-md px-5 py-5 bg-[#f3f3f3] border-2 border-black text-black">
+                <div id="delete" className={`fixed left-[40%] top-[20%] w-[300px] rounded-md px-5 py-5 bg-[#f3f3f3] border-2 border-black text-black`}>
                     <div className="flex justify-between">
                         <div className="font-bold">Delete data</div>
                         <GridCloseIcon onClick={() => setPopupDelete(false)}/>
@@ -295,7 +296,7 @@ export default function PendudukPage() {
             }
 
             {popupEdit && popupAdd != true && popupDelete != true && 
-                <div className={`absolute left-[40%] top-[20%] ${!anggotaKeluargaEdit ? 'w-[300px]' : 'w-[400px]'} rounded-md px-5 py-5 bg-[#f3f3f3] border-2 border-black text-black`}>
+                <div id="edit" className={`fixed left-[40%] top-[20%] ${!anggotaKeluargaEdit ? 'w-[300px]' : 'w-[400px]'} rounded-md px-5 py-5 bg-[#f3f3f3] border-2 border-black text-black`}>
                     <div className="flex justify-between">
                         <div className="font-bold">Edit data</div>
                         <GridCloseIcon onClick={() => {setPopupEdit(false); console.log(selectedData.namaAnggota)}}/>
@@ -486,7 +487,7 @@ export default function PendudukPage() {
             }
 
             {popupAdd && popupDelete != true && popupEdit != true && 
-                <div className="absolute bg-[#f3f3f3] left-[40%] top-[10%] px-5 rounded-md py-5">
+                <div className="fixed bg-[#f3f3f3] left-[40%] top-[10%] px-5 rounded-md py-5">
                     <div className="flex justify-between">
                         <h1 className="font-bold text-xl">Add data</h1>
                         <GridCloseIcon onClick={() => setPopupAdd(false)} className="hover:scale-125"/>
@@ -498,8 +499,8 @@ export default function PendudukPage() {
 
 
             
-            <div className="py-5 px-16">
-                <button className="px-3 py-1 bg-[#232323] text-white rounded-md text-md"
+            <div className="py-5 px-16" id="test">
+                <button id="add" className="px-3 py-1 bg-[#232323] text-white rounded-md text-md"
                     onClick={() => setPopupAdd(true)}>Add data</button>
                 <button className="px-3 py-1 bg-[#232323] text-white rounded-md text-md ml-2 mb-2"
                     onClick={() => router.push('/admin')}>Back to maps</button>
@@ -536,7 +537,7 @@ export default function PendudukPage() {
                                         <StyledTableCell align="center" component="th" scope="row">{row.potensi}</StyledTableCell>
                                         <StyledTableCell align="center" component="th" scope="row">
                                             <div className="flex justify-center gap-2">
-                                                <FaRegEdit className="hover:scale-150" onClick={() => handlePopUpEdit(row)}/>
+                                                <FaRegEdit className="hover:scale-150" onClick={() => {handlePopUpEdit(row)}}/>
                                                 <FaTrash className="hover:scale-150" onClick={() => handlePopUpDelete(row)}/>
                                             </div>
                                             
