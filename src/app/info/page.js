@@ -126,15 +126,38 @@ export default function InformationPage() {
             });
     }
 
-    const handleUpdate = (potensi, text) => {
+    const handleUpdate = async (potensi, text) => {
         if (potensi.idDocs != null ){
             const docRef = doc(db, 'infopotensi', potensi.idDocs);
-            updateDoc(docRef, {
-                info: text,
-            })
+            try {
+                await updateDoc(docRef, {
+                    info: text,
+                });
+                console.log('Document successfully updated!');
+            } catch (error) {
+                console.error('Error updating document:', error);
+            }
+        } else {
+            console.log('a')
         }
         console.log(potensi)
         console.log(text)
+        setEdit1(false)
+        setEdit2(false)
+        setEdit3(false)
+        setEdit4(false)
+        setEdit5(false)
+        setEdit6(false)
+        setEdit7(false)
+        setEdit8(false)
+        setEdit9(false)
+        setEdit10(false)
+        setEdit11(false)
+        setEdit12(false)
+        setEdit13(false)
+        setEdit14(false)
+        setEdit15(false)
+        getInfoPotensi()
         
     }
 
@@ -165,7 +188,7 @@ export default function InformationPage() {
                                 }
                                 {user && <FaRegEdit className="hover:scale-125 ml-2" onClick={()=> setEdit1(!edit1)}/>}
                             </div>
-                            { edit1 && <button className="mt-2" onClick={() => {handleUpdate(potensi[0], editText1); notify(); setTimeout(location.reload(), 3000)}}>Submit</button>}
+                            { edit1 && <button className="mt-2" onClick={() => {handleUpdate(potensi[0], editText1); notify();}}>Submit</button>}
                         </div>
                     </div>
                     <div className="border-2 border-black w-[400px] h-[125px] flex flex-col justify-center place-items-center">
@@ -181,7 +204,7 @@ export default function InformationPage() {
                                 }
                                 {user && <FaRegEdit className="hover:scale-125 ml-2" onClick={()=> setEdit2(!edit2)}/>}
                             </div>
-                            { edit2 && <button className="mt-2" onClick={() => {handleUpdate(potensi[1], editText2); notify(); setTimeout(location.reload(), 3000)}}>Submit</button>}
+                            { edit2 && <button className="mt-2" onClick={() => {handleUpdate(potensi[1], editText2); notify();}}>Submit</button>}
                         </div>
                     </div>
                     <div className="border-2 border-black w-[400px] h-[125px] flex flex-col justify-center place-items-center">
@@ -197,7 +220,7 @@ export default function InformationPage() {
                                 }
                                 {user && <FaRegEdit className="hover:scale-125 ml-2" onClick={()=> setEdit3(!edit3)}/>}
                             </div>
-                            { edit3 && <button className="mt-2" onClick={() => {handleUpdate(potensi[2], editText3); notify(); setTimeout(location.reload(), 3000)}}>Submit</button>}
+                            { edit3 && <button className="mt-2" onClick={() => {handleUpdate(potensi[2], editText3); notify();}}>Submit</button>}
                         </div>
                     </div>
                 </section>
@@ -215,7 +238,7 @@ export default function InformationPage() {
                                 }
                                 {user && <FaRegEdit className="hover:scale-125 ml-2" onClick={()=> setEdit4(!edit4)}/>}
                             </div>
-                            { edit4 && <button className="mt-2" onClick={() => {handleUpdate(potensi[3], editText4); notify(); setTimeout(location.reload(), 3000)}}>Submit</button>}
+                            { edit4 && <button className="mt-2" onClick={() => {handleUpdate(potensi[3], editText4); notify();}}>Submit</button>}
                         </div>
                     </div>
                     <div className="border-2 border-black w-[400px] h-[125px] flex flex-col justify-center place-items-center">
@@ -231,7 +254,7 @@ export default function InformationPage() {
                                 }
                                 {user && <FaRegEdit className="hover:scale-125 ml-2" onClick={()=> setEdit5(!edit5)}/>}
                             </div>
-                            { edit5 && <button className="mt-2" onClick={() => {handleUpdate(potensi[4], editText5); notify(); setTimeout(location.reload(), 3000)}}>Submit</button>}
+                            { edit5 && <button className="mt-2" onClick={() => {handleUpdate(potensi[4], editText5); notify();}}>Submit</button>}
                         </div>
                     </div>
                     <div className="border-2 border-black w-[400px] h-[125px] flex flex-col justify-center place-items-center">
@@ -247,7 +270,7 @@ export default function InformationPage() {
                                 }
                                 {user && <FaRegEdit className="hover:scale-125 ml-2" onClick={()=> setEdit6(!edit6)}/>}
                             </div>
-                            { edit6 && <button className="mt-2" onClick={() => {handleUpdate(potensi[5], editText6); notify(); setTimeout(location.reload(), 3000)}}>Submit</button>}
+                            { edit6 && <button className="mt-2" onClick={() => {handleUpdate(potensi[5], editText6); notify();}}>Submit</button>}
                         </div>
                     </div>
                 </section>
@@ -260,12 +283,12 @@ export default function InformationPage() {
                         <div className="mt-2 flex flex-col place-items-center">
                             <div className="flex place-items-center">
                                 { !edit7 ? <p>{potensi[6]?.infoPotensi}</p> :
-                                    <input required placeholder="Potensi" value={editText6} onChange={(e) => setEditText6(e.target.value)}
+                                    <input required placeholder="Potensi" value={editText7} onChange={(e) => setEditText7(e.target.value)}
                                         className="nama border-2 outline-none rounded-md w-72 px-2 text-black" type="text"/>
                                 }
                                 {user && <FaRegEdit className="hover:scale-125 ml-2" onClick={()=> setEdit7(!edit7)}/>}
                             </div>
-                            { edit7 && <button className="mt-2" onClick={() => {handleUpdate(potensi[6], editText7); notify(); setTimeout(location.reload(), 3000)}}>Submit</button>}
+                            { edit7 && <button className="mt-2" onClick={() => {handleUpdate(potensi[6], editText7); notify();}}>Submit</button>}
                         </div>
                     </div>
                     <div className="border-2 border-black w-[400px] h-[125px] flex flex-col justify-center place-items-center">
@@ -276,12 +299,12 @@ export default function InformationPage() {
                         <div className="mt-2 flex flex-col place-items-center">
                             <div className="flex place-items-center">
                                 { !edit8 ? <p>{potensi[7]?.infoPotensi}</p> :
-                                    <input required placeholder="Potensi" value={editText5} onChange={(e) => setEditText5(e.target.value)}
+                                    <input required placeholder="Potensi" value={editText8} onChange={(e) => setEditText8(e.target.value)}
                                         className="nama border-2 outline-none rounded-md w-72 px-2 text-black" type="text"/>
                                 }
                                 {user && <FaRegEdit className="hover:scale-125 ml-2" onClick={()=> setEdit8(!edit8)}/>}
                             </div>
-                            { edit8 && <button className="mt-2" onClick={() => {handleUpdate(potensi[7], editText8); notify(); setTimeout(location.reload(), 3000)}}>Submit</button>}
+                            { edit8 && <button className="mt-2" onClick={() => {handleUpdate(potensi[7], editText8); notify();}}>Submit</button>}
                         </div>
                     </div>
                     <div className="border-2 border-black w-[400px] h-[125px] flex flex-col justify-center place-items-center">
@@ -292,12 +315,12 @@ export default function InformationPage() {
                         <div className="mt-2 flex flex-col place-items-center">
                             <div className="flex place-items-center">
                                 { !edit9 ? <p>{potensi[8]?.infoPotensi}</p> :
-                                    <input required placeholder="Potensi" value={editText6} onChange={(e) => setEditText6(e.target.value)}
+                                    <input required placeholder="Potensi" value={editText9} onChange={(e) => setEditText9(e.target.value)}
                                         className="nama border-2 outline-none rounded-md w-72 px-2 text-black" type="text"/>
                                 }
                                 {user && <FaRegEdit className="hover:scale-125 ml-2" onClick={()=> setEdit9(!edit9)}/>}
                             </div>
-                            { edit9 && <button className="mt-2" onClick={() => {handleUpdate(potensi[8], editText9); notify(); setTimeout(location.reload(), 3000)}}>Submit</button>}
+                            { edit9 && <button className="mt-2" onClick={() => {handleUpdate(potensi[8], editText9); notify();}}>Submit</button>}
                         </div>
                     </div>
                 </section>
@@ -315,7 +338,7 @@ export default function InformationPage() {
                                 }
                                 {user && <FaRegEdit className="hover:scale-125 ml-2" onClick={()=> setEdit10(!edit10)}/>}
                             </div>
-                            { edit10 && <button className="mt-2" onClick={() => {handleUpdate(potensi[9], editText10); notify(); setTimeout(location.reload(), 3000)}}>Submit</button>}
+                            { edit10 && <button className="mt-2" onClick={() => {handleUpdate(potensi[9], editText10); notify();}}>Submit</button>}
                         </div>
                     </div>
                     <div className="border-2 border-black w-[400px] h-[125px] flex flex-col justify-center place-items-center">
@@ -331,7 +354,7 @@ export default function InformationPage() {
                                 }
                                 {user && <FaRegEdit className="hover:scale-125 ml-2" onClick={()=> setEdit11(!edit11)}/>}
                             </div>
-                            { edit11 && <button className="mt-2" onClick={() => {handleUpdate(potensi[10], editText11); notify(); setTimeout(location.reload(), 3000)}}>Submit</button>}
+                            { edit11 && <button className="mt-2" onClick={() => {handleUpdate(potensi[10], editText11); notify();}}>Submit</button>}
                         </div>
                     </div>
                     <div className="border-2 border-black w-[400px] h-[125px] flex flex-col justify-center place-items-center">
@@ -347,7 +370,7 @@ export default function InformationPage() {
                                 }
                                 {user && <FaRegEdit className="hover:scale-125 ml-2" onClick={()=> setEdit12(!edit12)}/>}
                             </div>
-                            { edit12 && <button className="mt-2" onClick={() => {handleUpdate(potensi[11], editText12); notify(); setTimeout(location.reload(), 3000)}}>Submit</button>}
+                            { edit12 && <button className="mt-2" onClick={() => {handleUpdate(potensi[11], editText12); notify();}}>Submit</button>}
                         </div>
                     </div>
                 </section>
@@ -365,7 +388,7 @@ export default function InformationPage() {
                                 }
                                 {user && <FaRegEdit className="hover:scale-125 ml-2" onClick={()=> setEdit13(!edit13)}/>}
                             </div>
-                            { edit13 && <button className="mt-2" onClick={() => {handleUpdate(potensi[12], editText13); notify(); setTimeout(location.reload(), 3000)}}>Submit</button>}
+                            { edit13 && <button className="mt-2" onClick={() => {handleUpdate(potensi[12], editText13); notify();}}>Submit</button>}
                         </div>
                     </div>
                     <div className="border-2 border-black w-[400px] h-[125px] flex flex-col justify-center place-items-center">
@@ -397,7 +420,7 @@ export default function InformationPage() {
                                 }
                                 {user && <FaRegEdit className="hover:scale-125 ml-2" onClick={()=> setEdit15(!edit15)}/>}
                             </div>
-                            { edit15 && <button className="mt-2" onClick={() => {handleUpdate(potensi[14], editText15); notify(); setTimeout(location.reload(), 3000)}}>Submit</button>}
+                            { edit15 && <button className="mt-2" onClick={() => {handleUpdate(potensi[14], editText15); notify();}}>Submit</button>}
                         </div>
                     </div>
                 </section>
