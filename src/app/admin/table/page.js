@@ -5,7 +5,7 @@ import { Paper, Table, TableBody, TableContainer, TableHead, TableRow } from "@m
 
 import { data } from "autoprefixer";
 import { use, useEffect, useState } from 'react';
-import { FaRegEdit, FaTrash } from "react-icons/fa";
+import { FaArrowDown, FaArrowUp, FaRegEdit, FaTrash } from "react-icons/fa";
 import StyledTableCell from "./styled_table_cell";
 import StyledTableRow from "./styled_table_row";
 import { GridCloseIcon } from "@mui/x-data-grid";
@@ -74,13 +74,148 @@ export default function PendudukPage() {
     const [ finalPotensi, setFinalPotensi ] = useState(null);
     const [ potensiRumahEdit, setPotensiRumahEdit ] = useState(false);
 
+    const [ potensiAsc, setPotensiAsc ] = useState(false);
+    const [ namaKepalaAsc, setNamaKepalaAsc ] = useState(false);
+    const [ RTAsc, setRTAsc ] = useState(false);
+    const [ alamatAsc, setAlamatAsc ] = useState(false);
+    const [ koorAsc, setKoorAsc ] = useState(false);
+
     const fetchData = async () => {
         try {
             const result = await getAllData();
-            setAllData(result);
+    
+            // Sort the data by 'namaKepala' property in ascending order
+            const sortedData = result.slice().sort((a, b) => {
+                const nameA = a.namaKepala.toLowerCase();
+                const nameB = b.namaKepala.toLowerCase();
+    
+                if (nameA < nameB) return -1;
+                if (nameA > nameB) return 1;
+                return 0;
+            });
+    
+            setAllData(sortedData);
         } catch (error) {
             console.error('Error fetching data:', error);
         }
+    };
+
+    const sortAscendantNamaKepala = () => {
+        const sortedData = dataAll.slice().sort((a, b) => {
+            const nameA = a.namaKepala.toLowerCase();
+            const nameB = b.namaKepala.toLowerCase();
+
+            if (nameA < nameB) return -1;
+            if (nameA > nameB) return 1;
+            return 0;
+        });
+        setAllData(sortedData);
+    };
+    
+    const sortDescendantNamaKepala = () => {
+        const sortedData = dataAll.slice().sort((a, b) => {
+            const nameA = a.namaKepala.toLowerCase();
+            const nameB = b.namaKepala.toLowerCase();
+
+            if (nameA > nameB) return -1;
+            if (nameA < nameB) return 1;
+            return 0;
+        });
+        setAllData(sortedData);
+    };
+    
+    const sortAscendantPotensi = () => {
+        const sortedData = dataAll.slice().sort((a, b) => {
+            const potensiA = parseInt(a.potensi, 10);
+            const potensiB = parseInt(b.potensi, 10);
+
+            return potensiA - potensiB;
+        });
+        setAllData(sortedData);
+    };
+    
+    const sortDescendantPotensi = () => {
+        const sortedData = dataAll.slice().sort((a, b) => {
+            const potensiA = parseInt(a.potensi, 10);
+            const potensiB = parseInt(b.potensi, 10);
+
+            return potensiB - potensiA;
+        });
+        setAllData(sortedData);
+    };
+    
+    const sortAscendantRT = () => {
+        const sortedData = dataAll.slice().sort((a, b) => {
+            const rtNumberA = parseInt(a.RTName.replace('RT', ''), 10);
+            const rtNumberB = parseInt(b.RTName.replace('RT', ''), 10);
+
+            return rtNumberA - rtNumberB;
+        });
+        setAllData(sortedData);
+    };
+    
+    const sortDescendantRT = () => {
+        const sortedData = dataAll.slice().sort((a, b) => {
+            const rtNumberA = parseInt(a.RTName.replace('RT', ''), 10);
+            const rtNumberB = parseInt(b.RTName.replace('RT', ''), 10);
+
+            return rtNumberB - rtNumberA;
+        });
+        setAllData(sortedData);
+    };
+
+    const sortAscendantAlamat = () => {
+        const sortedData = dataAll.slice().sort((a, b) => {
+            // Use localeCompare for string comparison
+            return a.alamat.localeCompare(b.alamat);
+        });
+    
+        setAllData(sortedData);
+    };
+
+    const sortDescendantAlamat = () => {
+        const sortedData = dataAll.slice().sort((a, b) => {
+            // Use localeCompare for string comparison
+            return b.alamat.localeCompare(a.alamat);
+        });
+    
+        setAllData(sortedData);
+    };
+
+    const sortAscendantCoordinates = () => {
+        const sortedData = dataAll.slice().sort((a, b) => {
+            // Check for invalid coordinates
+            if (!a.koordinate || !b.koordinate) return 0;
+    
+            // Parse latitude values from coordinates
+            const latA = parseFloat(a.koordinate.lat);
+            const latB = parseFloat(b.koordinate.lat);
+    
+            // Check for NaN values
+            if (isNaN(latA) || isNaN(latB)) return 0;
+    
+            return latA - latB;
+        });
+    
+        setAllData(sortedData);
+    };
+
+    const sortDescendantCoordinates = () => {
+        const sortedData = dataAll.slice().sort((a, b) => {
+            // Check for invalid coordinates
+            if (!a.koordinate || !b.koordinate) return 0;
+    
+            // Parse latitude values from coordinates
+            const latA = parseFloat(a.koordinate.lat);
+            const latB = parseFloat(b.koordinate.lat);
+    
+            // Check for NaN values
+            if (isNaN(latA) || isNaN(latB)) return 0;
+    
+            return latB - latA;
+        });
+    
+        setAllData(sortedData);
     };
 
     const handlePotensi = (value) => {
@@ -591,12 +726,42 @@ export default function PendudukPage() {
                         <TableHead>
                             <TableRow>
                                 <StyledTableCell align="center">No.</StyledTableCell>
-                                <StyledTableCell align="center">Nama Kepala Keluarga</StyledTableCell>
+                                <StyledTableCell align="center">
+                                    <div className="flex justify-center place-items-center gap-2">
+                                        <p>Nama Kepala Keluarga</p>
+                                        {namaKepalaAsc ? 
+                                            <FaArrowUp onClick={() => {setNamaKepalaAsc(false); sortDescendantNamaKepala()}}/> : <FaArrowDown onClick={() => {setNamaKepalaAsc(true); sortAscendantNamaKepala()}}/>}
+                                    </div>
+                                </StyledTableCell>
                                 <StyledTableCell align="center">Anggota Keluarga</StyledTableCell>
-                                <StyledTableCell align="center">Alamat Rumah</StyledTableCell>
-                                <StyledTableCell align="center">RT</StyledTableCell>
-                                <StyledTableCell align="center">Koordinat Rumah</StyledTableCell>
-                                <StyledTableCell align="center">Potensi</StyledTableCell>
+                                <StyledTableCell align="center">
+                                    <div className="flex justify-center place-items-center gap-2">
+                                        <p>Alamat</p>
+                                        {alamatAsc ? 
+                                            <FaArrowUp onClick={() => {setAlamatAsc(false); sortDescendantAlamat()}}/> : <FaArrowDown onClick={() => {setAlamatAsc(true); sortAscendantAlamat()}}/>}
+                                    </div>
+                                </StyledTableCell>
+                                <StyledTableCell align="center">
+                                    <div className="flex justify-center place-items-center gap-2">
+                                        <p>RT</p>
+                                        {RTAsc ? 
+                                            <FaArrowUp onClick={() => {setRTAsc(false); sortDescendantRT()}}/> : <FaArrowDown onClick={() => {setRTAsc(true); sortAscendantRT()}}/>}
+                                    </div>
+                                </StyledTableCell>
+                                <StyledTableCell align="center">
+                                    <div className="flex justify-center place-items-center gap-2">
+                                        <p>Koordinat Rumah</p>
+                                        {koorAsc ? 
+                                            <FaArrowUp onClick={() => {setKoorAsc(false); sortDescendantCoordinates()}}/> : <FaArrowDown onClick={() => {setKoorAsc(true); sortAscendantCoordinates()}}/>}
+                                    </div>
+                                </StyledTableCell>
+                                <StyledTableCell align="center">
+                                    <div className="flex justify-center place-items-center gap-2">
+                                        <p>Potensi</p>
+                                        {potensiAsc ? 
+                                            <FaArrowUp onClick={() => {setPotensiAsc(false); sortDescendantPotensi()}}/> : <FaArrowDown onClick={() => {setPotensiAsc(true); sortAscendantPotensi()}}/>}
+                                    </div>
+                                </StyledTableCell>
                                 <StyledTableCell align="center">Action</StyledTableCell>
                             </TableRow>
                         </TableHead>
