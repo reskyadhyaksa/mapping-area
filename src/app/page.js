@@ -103,6 +103,38 @@ export default function HomePage() {
                 pathname = 'circle14.png'
             } else if (index.angka_potensi == '3a'){
                 pathname = 'circle15.png'
+            } else if (index.angka_potensi == '6c'){
+                pathname = 'circle16.png'
+            } else if (index.angka_potensi == '7b'){
+                pathname = 'circle17.png'
+            } else if (index.angka_potensi == '8a'){
+                pathname = 'circle18.png'
+            } else if (index.angka_potensi == '9a'){
+                pathname = 'circle19.png'
+            } else if (index.angka_potensi == '9b'){
+                pathname = 'circle20.png'
+            } else if (index.angka_potensi == '10'){
+                pathname = 'circle21.png'
+            } else if (index.angka_potensi == '9c'){
+                pathname = 'circle22.png'
+            } else if (index.angka_potensi == '10a'){
+                pathname = 'circle23.png'
+            } else if (index.angka_potensi == '11'){
+                pathname = 'circle24.png'
+            } else if (index.angka_potensi == '12'){
+                pathname = 'circle25.png'
+            } else if (index.angka_potensi == '10b'){
+                pathname = 'circle26.png'
+            } else if (index.angka_potensi == '11a'){
+                pathname = 'circle27.png'
+            } else if (index.angka_potensi == '12a'){
+                pathname = 'circle28.png'
+            } else if (index.angka_potensi == '13'){
+                pathname = 'circle29.png'
+            } else if (index.angka_potensi == '14'){
+                pathname = 'circle30.png'
+            } else if (index.angka_potensi == '15'){
+                pathname = 'circle31.png'
             }
     
     
@@ -379,10 +411,6 @@ export default function HomePage() {
                             <p>5a</p>
                         </div>
                         <div className='flex gap-2'>
-                            <input type='checkbox' value='6a' onChange={handlePotensiFilter}/>
-                            <p>6a</p>
-                        </div>
-                        <div className='flex gap-2'>
                             <input type='checkbox' value='7a' onChange={handlePotensiFilter}/>
                             <p>7a</p>
                         </div>
@@ -402,12 +430,12 @@ export default function HomePage() {
                             <input type='checkbox' value='11a' onChange={handlePotensiFilter}/>
                             <p>11a</p>
                         </div>
-                    </div>
-                    <div className='flex flex-col'>
                         <div className='flex gap-2'>
                             <input type='checkbox' value='12a' onChange={handlePotensiFilter}/>
                             <p>12a</p>
                         </div>
+                    </div>
+                    <div className='flex flex-col'>
                         <div className='flex gap-2'>
                             <input type='checkbox' value='5b' onChange={handlePotensiFilter}/>
                             <p>5b</p>
