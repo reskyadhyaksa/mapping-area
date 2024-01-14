@@ -7,13 +7,20 @@ import { db } from './firebase/config';
 import getAllData from './handler/get_data';
 import Supercluster, { ClusterFeature, PointFeature } from 'supercluster';
 import "./globals.css"
+import { FaAlignJustify, FaHamburger } from 'react-icons/fa';
+import filterData from './handler/filter_data';
+
 
 export default function HomePage() {
+    const [ hambState, SetOpenHamb] = useState(false);
+    const [ openFilter, SetOpenFilter ] = useState(false);
+    const [ openRW, SetOpenRW ] = useState(false);
     const [ RTrumah, setRTrumah ] = useState('ALL');
     const [ dataArray, setDataArray ] = useState([]);
     const [ selectedMarkerIndex, setSelectedMarkerIndex] = useState(null);
     const [ centerLat, setCenterLat ] = useState(-6.952064121310866);
     const [ centerLng, setCenterLng ] = useState(107.67364643835181);
+    const [ potensiFilter, setPotensiFilter ] = useState([])
     
 
 
@@ -117,13 +124,66 @@ export default function HomePage() {
         setDataArray(temp_array)
     }
 
+    const handlePotensiFilter = async (e) => {
+        const { value, checked } = e.target;
+        const updatedPotensiFilter = checked ? [...potensiFilter, value]
+            : potensiFilter.filter((item) => item !== value);
+        
+        setPotensiFilter(updatedPotensiFilter);
+        
+        // Wait for getAllData to resolve, assuming it returns a Promise
+        const baseDataArray = await getAllData();
+
+        // Apply the updated filter to the base data array
+        const filteredData = baseDataArray.filter((item) => updatedPotensiFilter.includes(item.potensi));
+        console.log('Filtered Data:', filteredData);
+        setDataArray(filteredData);
+    };
+
+    const clearPotensiFilter = async () => {
+        // Uncheck all checkboxes
+        const checkboxes = document.querySelectorAll('input[type="checkbox"]');
+        checkboxes.forEach((checkbox) => {
+            checkbox.checked = false;
+        });
+
+        setPotensiFilter([]);
+
+        // Wait for getAllData to resolve, assuming it returns a Promise
+        const baseDataArray = await getAllData();
+        setDataArray(baseDataArray);
+    }
 
     useEffect(() => {
-        getData()
-        if(RTrumah == 'ALL'){
-            getAllData().then((data) => setDataArray(data));
-        }
-    }, [RTrumah])
+        const fetchData = async () => {
+            let newDataArray;
+
+            if (RTrumah === 'ALL' && potensiFilter.length === 0) {
+                newDataArray = await getAllData();
+            } else if (RTrumah !== 'ALL' && potensiFilter.length === 0) {
+                const baseDataArray = await getAllData();
+                const filteredData = baseDataArray.filter(
+                    (item) =>
+                        (RTrumah === 'ALL' || item.RTName === RTrumah)
+                );
+                newDataArray = filteredData;
+
+            } else {
+                // Apply both RT and potensi filters
+                const baseDataArray = await getAllData();
+                const filteredData = baseDataArray.filter(
+                    (item) =>
+                        (RTrumah === 'ALL' || item.RTName === RTrumah) &&
+                        (potensiFilter.length === 0 || potensiFilter.includes(item.potensi))
+                );
+                newDataArray = filteredData;
+            }
+
+            setDataArray(newDataArray);
+        };
+
+        fetchData();
+    }, [RTrumah, potensiFilter]);
 
 
     return isLoaded ? (
@@ -133,7 +193,7 @@ export default function HomePage() {
             options={options}
             zoom={16}>
         { /* Child components, such as markers, info windows, etc. */ }
-        {dataArray.map((e, i) => {
+        {dataArray?.map((e, i) => {
             return(
                 <div key={i}>
                     <Marker position={{lat: e.koordinate.lat, lng: e.koordinate.lon}} onClick={() => handleMarkerClick(i)} 
@@ -191,7 +251,19 @@ export default function HomePage() {
             )
         })}
         <>
-            <div className='absolute flex flex-col right-20 bottom-10 bg-slate-800 rounded-md text-white px-10 py-3'>
+            <div className='absolute flex flex-col left-5 top-5 bg-slate-800 rounded-md px-7 py-3 text-white'>
+                <FaAlignJustify onClick={() => SetOpenHamb(true)} className={`fill-white ${hambState && 'hidden'}`}/>
+                { hambState &&
+                    <>
+                        <button onClick={() => SetOpenHamb(false)}>Filter Options</button>
+                        <hr className="border-white w-full mt-2 mb-2"/>
+                        <button onClick={() => {SetOpenFilter(!openFilter); SetOpenRW(false); getAllData().then((data) => setDataArray(data)); setPotensiFilter([]); setRTrumah('ALL');}} className={`${openFilter && 'bg-white bg-opacity-15'} rounded-md mb-2`}>Potensi</button>
+                        <button onClick={() => {SetOpenRW(!openRW); SetOpenFilter(false)}} className={`${openRW && 'bg-white bg-opacity-15'} rounded-md mb-2`}>RT</button>
+                        <button onClick={() => {SetOpenRW(false); SetOpenFilter(false); setPotensiFilter([]); setRTrumah('ALL'); getAllData().then((data) => setDataArray(data));}} className={`rounded-md mb-2`}>Refresh</button>
+                    </>
+                }
+            </div>
+            {openRW && <div className='absolute flex flex-col left-[12rem] top-[22px] bg-slate-800 rounded-md text-white px-10 py-3'>
                 <h1 className='font-bold mb-1 text-md'>FILTER OPTIONS</h1>
                 <div className='flex flex-row gap-3'>
                     <div className="flex flex-col place-items-center">
@@ -223,7 +295,152 @@ export default function HomePage() {
                         <button onClick={() => {setRTrumah('RT06')}} className={`${ RTrumah == 'RT06' ? 'bg-red-600' : 'bg-gray-200'} h-[18px] w-[18px] md:h-6 md:w-6 md:mt-1 mt-2 rounded-full border-2 flex justify-center place-items-center font-bold text-white`}/>
                     </div>
                 </div>
-            </div>
+            </div> }
+
+            { openFilter && <div className='absolute flex flex-col place-items-center left-[12rem] top-[22px] bg-slate-800 rounded-md text-white px-10 py-3'>
+                <h1 className='font-bold'>Filter Potensi Options</h1>
+                <hr className="border-white w-full mt-2 mb-3"/>
+                <div className='flex gap-8'>
+                    <div className='flex flex-col'>
+                        <div className='flex gap-2'>
+                            <input type='checkbox' value='1' onChange={handlePotensiFilter}/>
+                            <p>1</p>
+                        </div>
+                        <div className='flex gap-2'>
+                            <input type='checkbox' value='2' onChange={handlePotensiFilter}/>
+                            <p>2</p>
+                        </div>
+                        <div className='flex gap-2'>
+                            <input type='checkbox' value='3' onChange={handlePotensiFilter}/>
+                            <p>3</p>
+                        </div>
+                        <div className='flex gap-2'>
+                            <input type='checkbox' value='4' onChange={handlePotensiFilter}/>
+                            <p>4</p>
+                        </div>
+                        <div className='flex gap-2'>
+                            <input type='checkbox' value='5' onChange={handlePotensiFilter}/>
+                            <p>5</p>
+                        </div>
+                        <div className='flex gap-2'>
+                            <input type='checkbox' value='6' onChange={handlePotensiFilter}/>
+                            <p>6</p>
+                        </div>
+                        <div className='flex gap-2'>
+                            <input type='checkbox' value='7' onChange={handlePotensiFilter}/>
+                            <p>7</p>
+                        </div>
+                        <div className='flex gap-2'>
+                            <input type='checkbox' value='8' onChange={handlePotensiFilter}/>
+                            <p>8</p>
+                        </div>
+                    </div>
+                    <div className='flex flex-col'>
+                        <div className='flex gap-2'>
+                            <input type='checkbox' value='9' onChange={handlePotensiFilter}/>
+                            <p>9</p>
+                        </div>
+                        <div className='flex gap-2'>
+                            <input type='checkbox' value='10' onChange={handlePotensiFilter}/>
+                            <p>10</p>
+                        </div>
+                        <div className='flex gap-2'>
+                            <input type='checkbox' value='11' onChange={handlePotensiFilter}/>
+                            <p>11</p>
+                        </div>
+                        <div className='flex gap-2'>
+                            <input type='checkbox' value='12' onChange={handlePotensiFilter}/>
+                            <p>12</p>
+                        </div>
+                        <div className='flex gap-2'>
+                            <input type='checkbox' value='13' onChange={handlePotensiFilter}/>
+                            <p>13</p>
+                        </div>
+                        <div className='flex gap-2'>
+                            <input type='checkbox' value='14' onChange={handlePotensiFilter}/>
+                            <p>14</p>
+                        </div>
+                        <div className='flex gap-2'>
+                            <input type='checkbox' value='15' onChange={handlePotensiFilter}/>
+                            <p>15</p>
+                        </div>
+                        <div className='flex gap-2'>
+                            <input type='checkbox' value='3a' onChange={handlePotensiFilter}/>
+                            <p>3a</p>
+                        </div>
+                    </div>
+                    <div className='flex flex-col'>
+                        <div className='flex gap-2'>
+                            <input type='checkbox' value='4a' onChange={handlePotensiFilter}/>
+                            <p>4a</p>
+                        </div>
+                        <div className='flex gap-2'>
+                            <input type='checkbox' value='5a' onChange={handlePotensiFilter}/>
+                            <p>5a</p>
+                        </div>
+                        <div className='flex gap-2'>
+                            <input type='checkbox' value='6a' onChange={handlePotensiFilter}/>
+                            <p>6a</p>
+                        </div>
+                        <div className='flex gap-2'>
+                            <input type='checkbox' value='7a' onChange={handlePotensiFilter}/>
+                            <p>7a</p>
+                        </div>
+                        <div className='flex gap-2'>
+                            <input type='checkbox' value='8a' onChange={handlePotensiFilter}/>
+                            <p>8a</p>
+                        </div>
+                        <div className='flex gap-2'>
+                            <input type='checkbox' value='9a' onChange={handlePotensiFilter}/>
+                            <p>9a</p>
+                        </div>
+                        <div className='flex gap-2'>
+                            <input type='checkbox' value='10a' onChange={handlePotensiFilter}/>
+                            <p>10a</p>
+                        </div>
+                        <div className='flex gap-2'>
+                            <input type='checkbox' value='11a' onChange={handlePotensiFilter}/>
+                            <p>11a</p>
+                        </div>
+                    </div>
+                    <div className='flex flex-col'>
+                        <div className='flex gap-2'>
+                            <input type='checkbox' value='12a' onChange={handlePotensiFilter}/>
+                            <p>12a</p>
+                        </div>
+                        <div className='flex gap-2'>
+                            <input type='checkbox' value='5b' onChange={handlePotensiFilter}/>
+                            <p>5b</p>
+                        </div>
+                        <div className='flex gap-2'>
+                            <input type='checkbox' value='6b' onChange={handlePotensiFilter}/>
+                            <p>6b</p>
+                        </div>
+                        <div className='flex gap-2'>
+                            <input type='checkbox' value='7b' onChange={handlePotensiFilter}/>
+                            <p>7b</p>
+                        </div>
+                        <div className='flex gap-2'>
+                            <input type='checkbox' value='9b' onChange={handlePotensiFilter}/>
+                            <p>9b</p>
+                        </div>
+                        <div className='flex gap-2'>
+                            <input type='checkbox' value='10b' onChange={handlePotensiFilter}/>
+                            <p>10b</p>
+                        </div>
+                        <div className='flex gap-2'>
+                            <input type='checkbox' value='6c' onChange={handlePotensiFilter}/>
+                            <p>6c</p>
+                        </div>
+                        <div className='flex gap-2'>
+                            <input type='checkbox' value='9c' onChange={handlePotensiFilter}/>
+                            <p>9c</p>
+                        </div>
+                    </div>
+                </div>
+                <button onClick={clearPotensiFilter} className='self-start mt-4 bg-white bg-opacity-30 px-4 rounded-sm'>Clear All</button>
+
+            </div>}
         
         </>
         </GoogleMap>

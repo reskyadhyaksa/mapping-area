@@ -375,7 +375,6 @@ const getAllData = async () => {
         })
     })
     
-    console.log('V :', temp_array)
     return temp_array;
 }
 
