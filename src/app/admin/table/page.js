@@ -58,8 +58,19 @@ export default function PendudukPage() {
 
     const [ potensiRumah, setPotensiRumah ] = useState(null);
     const [ potensiRumah2, setPotensiRumah2 ] = useState(null);
-    const [ AngkaPotensi, setAngkaPotensi ] = useState(null);
-    const [ AngkaPotensi2, setAngkaPotensi2 ] = useState(null);
+
+    const [ AngkaPotensi, setAngkaPotensi ] = useState('');
+    const [ AngkaPotensi2, setAngkaPotensi2 ] = useState('');
+    const [ AngkaPotensi3, setAngkaPotensi3 ] = useState('');
+    const [ AngkaPotensi4, setAngkaPotensi4 ] = useState('');
+    const [ AngkaPotensi5, setAngkaPotensi5 ] = useState('');
+
+    const [ potensiAktif, setPotensiAktif1 ] = useState(false);
+    const [ potensiAktif2, setPotensiAktif2 ] = useState(false);
+    const [ potensiAktif3, setPotensiAktif3 ] = useState(false);
+    const [ potensiAktif4, setPotensiAktif4 ] = useState(false);
+    const [ potensiAktif5, setPotensiAktif5 ] = useState(false);
+
     const [ finalPotensi, setFinalPotensi ] = useState(null);
     const [ potensiRumahEdit, setPotensiRumahEdit ] = useState(false);
 
@@ -73,17 +84,43 @@ export default function PendudukPage() {
     };
 
     const handlePotensi = (value) => {
-        if (AngkaPotensi === null) {
-            // If no button is active, activate the first button
-            setAngkaPotensi(value);
-        } else if (AngkaPotensi2 === null) {
-            // If only one button is active, activate the second button
-            setAngkaPotensi2(value);
-        } else {
-            // If two buttons are active, deactivate the earliest clicked button and activate the new button
-            setAngkaPotensi(AngkaPotensi2);
-            setAngkaPotensi2(value);
+        //! HANDLE AKTIF
+        if (value === 1){
+            setAngkaPotensi('1')
+            setPotensiAktif1(true)
+        } else if (value === 2){
+            setAngkaPotensi2('2')
+            setPotensiAktif2(true)
+        } else if (value === 3){
+            setAngkaPotensi3('3')
+            setPotensiAktif3(true)
+        } else if (value === 4){
+            setAngkaPotensi4('4')
+            setPotensiAktif4(true)
+        } else if (value === 5){
+            setAngkaPotensi5('5')
+            setPotensiAktif5(true)
         }
+
+        //! HANDLE NONAKTIF
+        if (value === 1 && potensiAktif){
+            setPotensiAktif1(false)
+            setAngkaPotensi('')
+        } else if (value === 2 && potensiAktif2){
+            setPotensiAktif2(false)
+            setAngkaPotensi2('')
+        } else if (value === 3 && potensiAktif3){
+            setPotensiAktif3(false)
+            setAngkaPotensi3('')
+        } else if (value === 4 && potensiAktif4){
+            setPotensiAktif4(false)
+            setAngkaPotensi4('')
+        } else if (value === 5 && potensiAktif5){
+            setPotensiAktif5(false)
+            setAngkaPotensi5('')
+        }
+
+
     };
 
     useEffect(() => {
@@ -102,38 +139,71 @@ export default function PendudukPage() {
         //     setRTName2(selectedData.RTName)
         // }
 
-        if (AngkaPotensi === '1' && AngkaPotensi2 === '2') {
+        if (AngkaPotensi === '1' && AngkaPotensi2 === '2' && AngkaPotensi3 === '' && AngkaPotensi4 === '' && AngkaPotensi5 === '') {
             setPotensiRumah2('3a');
-        } else if (AngkaPotensi === '1' && AngkaPotensi2 === '3' || AngkaPotensi === '3' && AngkaPotensi2 === '1') {
+        } else if (AngkaPotensi === '1' && AngkaPotensi2 === '' && AngkaPotensi3 === '3' && AngkaPotensi4 === '' && AngkaPotensi5 === '') {
             setPotensiRumah2('4a');
-        } else if (AngkaPotensi === '1' && AngkaPotensi2 === '4' || AngkaPotensi === '4' && AngkaPotensi2 === '1') {
+        } else if (AngkaPotensi === '1' && AngkaPotensi2 === '' && AngkaPotensi3 === '' && AngkaPotensi4 === '4' && AngkaPotensi5 === '') {
             setPotensiRumah2('5a');
-        } else if (AngkaPotensi === '1' && AngkaPotensi2 === '5' || AngkaPotensi === '5' && AngkaPotensi2 === '1') {
+        } else if (AngkaPotensi === '1' && AngkaPotensi2 === '' && AngkaPotensi3 === '' && AngkaPotensi4 === '' && AngkaPotensi5 === '5') {
             setPotensiRumah2('6');
-        } else if (AngkaPotensi === '2' && AngkaPotensi2 === '3' || AngkaPotensi === '3' && AngkaPotensi2 === '2') {
+        } else if (AngkaPotensi === '' && AngkaPotensi2 === '2' && AngkaPotensi3 === '3' && AngkaPotensi4 === '' && AngkaPotensi5 === '') {
             setPotensiRumah2('5b');
-        } else if (AngkaPotensi === '2' && AngkaPotensi2 === '4' || AngkaPotensi === '4' && AngkaPotensi2 === '2') {
+        } else if (AngkaPotensi === '' && AngkaPotensi2 === '2' && AngkaPotensi3 === '' && AngkaPotensi4 === '4' && AngkaPotensi5 === '') {
             setPotensiRumah2('6b');
-        } else if (AngkaPotensi === '2' && AngkaPotensi2 === '5' || AngkaPotensi === '5' && AngkaPotensi2 === '2') {
+        } else if (AngkaPotensi === '' && AngkaPotensi2 === '2' && AngkaPotensi3 === '' && AngkaPotensi4 === '' && AngkaPotensi5 === '5') {
             setPotensiRumah2('7');
-        } else if (AngkaPotensi === '3' && AngkaPotensi2 === '4' || AngkaPotensi === '4' && AngkaPotensi2 === '3') {
+        } else if (AngkaPotensi === '' && AngkaPotensi2 === '' && AngkaPotensi3 === '3' && AngkaPotensi4 === '4' && AngkaPotensi5 === '') {
             setPotensiRumah2('7a');
-        } else if (AngkaPotensi === '3' && AngkaPotensi2 === '5' || AngkaPotensi === '5' && AngkaPotensi2 === '3') {
+        } else if (AngkaPotensi === '' && AngkaPotensi2 === '' && AngkaPotensi3 === '3' && AngkaPotensi4 === '' && AngkaPotensi5 === '5') {
             setPotensiRumah2('8');
-        } else if (AngkaPotensi === '4' && AngkaPotensi2 === '5' || AngkaPotensi === '5' && AngkaPotensi2 === '4') {
+        } else if (AngkaPotensi === '' && AngkaPotensi2 === '' && AngkaPotensi3 === '' && AngkaPotensi4 === '4' && AngkaPotensi5 === '5') {
             setPotensiRumah2('9');
-        } else if (AngkaPotensi === '1') {
+        } else if (AngkaPotensi === '1' && AngkaPotensi2 === '2' && AngkaPotensi3 === '3' && AngkaPotensi4 === '' && AngkaPotensi5 === '') {
+            setPotensiRumah2('6c');
+        } else if (AngkaPotensi === '1' && AngkaPotensi2 === '2' && AngkaPotensi3 === '' && AngkaPotensi4 === '4' && AngkaPotensi5 === '') {
+            setPotensiRumah2('7b');
+        } else if (AngkaPotensi === '1' && AngkaPotensi2 === '2' && AngkaPotensi3 === '' && AngkaPotensi4 === '' && AngkaPotensi5 === '5') {
+            setPotensiRumah2('8a');
+        } else if (AngkaPotensi === '1' && AngkaPotensi2 === '' && AngkaPotensi3 === '3' && AngkaPotensi4 === '4' && AngkaPotensi5 === '') {
+            setPotensiRumah2('9a');
+        } else if (AngkaPotensi === '1' && AngkaPotensi2 === '' && AngkaPotensi3 === '3' && AngkaPotensi4 === '' && AngkaPotensi5 === '5') {
+            setPotensiRumah2('9b');
+        } else if (AngkaPotensi === '1' && AngkaPotensi2 === '' && AngkaPotensi3 === '' && AngkaPotensi4 === '4' && AngkaPotensi5 === '5') {
+            setPotensiRumah2('10');
+        } else if (AngkaPotensi === '' && AngkaPotensi2 === '2' && AngkaPotensi3 === '3' && AngkaPotensi4 === '4' && AngkaPotensi5 === '') {
+            setPotensiRumah2('9c');
+        } else if (AngkaPotensi === '' && AngkaPotensi2 === '2' && AngkaPotensi3 === '3' && AngkaPotensi4 === '' && AngkaPotensi5 === '5') {
+            setPotensiRumah2('10a');
+        } else if (AngkaPotensi === '' && AngkaPotensi2 === '2' && AngkaPotensi3 === '' && AngkaPotensi4 === '4' && AngkaPotensi5 === '5') {
+            setPotensiRumah2('11');
+        } else if (AngkaPotensi === '' && AngkaPotensi2 === '' && AngkaPotensi3 === '3' && AngkaPotensi4 === '4' && AngkaPotensi5 === '5') {
+            setPotensiRumah2('12');
+        } else if (AngkaPotensi === '1' && AngkaPotensi2 === '2' && AngkaPotensi3 === '3' && AngkaPotensi4 === '4' && AngkaPotensi5 === '') {
+            setPotensiRumah2('10b');
+        } else if (AngkaPotensi === '1' && AngkaPotensi2 === '2' && AngkaPotensi3 === '3' && AngkaPotensi4 === '' && AngkaPotensi5 === '5') {
+            setPotensiRumah2('11a');
+        } else if (AngkaPotensi === '1' && AngkaPotensi2 === '2' && AngkaPotensi3 === '' && AngkaPotensi4 === '4' && AngkaPotensi5 === '5') {
+            setPotensiRumah2('12a');
+        } else if (AngkaPotensi === '1' && AngkaPotensi2 === '' && AngkaPotensi3 === '3' && AngkaPotensi4 === '4' && AngkaPotensi5 === '5') {
+            setPotensiRumah2('13');
+        } else if (AngkaPotensi === '' && AngkaPotensi2 === '2' && AngkaPotensi3 === '3' && AngkaPotensi4 === '4' && AngkaPotensi5 === '5') {
+            setPotensiRumah2('14');
+        } else if (AngkaPotensi === '1' && AngkaPotensi2 === '2' && AngkaPotensi3 === '3' && AngkaPotensi4 === '4' && AngkaPotensi5 === '5') {
+            setPotensiRumah2('15');
+        } else if (AngkaPotensi === '1' && AngkaPotensi2 === '' && AngkaPotensi3 === '' && AngkaPotensi4 === '' && AngkaPotensi5 === '') {
             setPotensiRumah2('1');
-        } else if (AngkaPotensi === '2') {
+        } else if (AngkaPotensi === '' && AngkaPotensi2 === '2' && AngkaPotensi3 === '' && AngkaPotensi4 === '' && AngkaPotensi5 === '') {
             setPotensiRumah2('2');
-        } else if (AngkaPotensi === '3') {
+        } else if (AngkaPotensi === '' && AngkaPotensi2 === '' && AngkaPotensi3 === '3' && AngkaPotensi4 === '' && AngkaPotensi5 === '') {
             setPotensiRumah2('3');
-        } else if (AngkaPotensi === '4') {
+        } else if (AngkaPotensi === '' && AngkaPotensi2 === '' && AngkaPotensi3 === '' && AngkaPotensi4 === '4' && AngkaPotensi5 === '') {
             setPotensiRumah2('4');
-        } else if (AngkaPotensi === '5') {
+        } else if (AngkaPotensi === '' && AngkaPotensi2 === '' && AngkaPotensi3 === '' && AngkaPotensi4 === '' && AngkaPotensi5 === '5') {
             setPotensiRumah2('5');
         }
-    }, [AngkaPotensi, AngkaPotensi2]);
+
+    }, [AngkaPotensi, AngkaPotensi2, AngkaPotensi3, AngkaPotensi4, AngkaPotensi5]);
 
     const handleEdit = async (row) => {
         if (SelectID != ''){
@@ -174,6 +244,18 @@ export default function PendudukPage() {
                 setKoordinateEdit(true)
                 setPotensiRumahEdit(true)
                 setRTNameEdit(true)
+
+                setAngkaPotensi('')
+                setAngkaPotensi2('')
+                setAngkaPotensi3('')
+                setAngkaPotensi4('')
+                setAngkaPotensi5('')
+                setPotensiAktif1(false)
+                setPotensiAktif2(false)
+                setPotensiAktif3(false)
+                setPotensiAktif4(false)
+                setPotensiAktif5(false)
+
                 fetchData()
             } catch (e){
                 console.log(e)
@@ -411,23 +493,23 @@ export default function PendudukPage() {
                                 <div className="flex flex-row justify-center gap-4">
                                     <div className="flex flex-col place-items-center">
                                         <p className="font-bold">1</p>
-                                        <button onClick={() => {handlePotensi('1')}} className={`${ AngkaPotensi == '1' || AngkaPotensi2 == '1' ? 'bg-[#FF0000]' : 'bg-gray-200'} h-[18px] w-[18px] md:h-6 md:w-6 rounded-full border-2 flex justify-center place-items-center font-bold text-white`}/>
+                                        <button onClick={() => {handlePotensi(1)}} className={`${ potensiAktif ? 'bg-[#FF0000]' : 'bg-gray-200'} h-[18px] w-[18px] md:h-6 md:w-6 rounded-full border-2 flex justify-center place-items-center font-bold text-white`}/>
                                     </div>
                                     <div className="flex flex-col place-items-center">
                                         <p className="font-bold">2</p>
-                                        <button onClick={() => {handlePotensi('2')}} className={`${ AngkaPotensi == '2' || AngkaPotensi2 == '2' ? 'bg-[#00FF00]' : 'bg-gray-200'} h-[18px] w-[18px] md:h-6 md:w-6 rounded-full border-2 flex justify-center place-items-center font-bold text-white`}/>
+                                        <button onClick={() => {handlePotensi(2)}} className={`${ potensiAktif2 ? 'bg-[#00FF00]' : 'bg-gray-200'} h-[18px] w-[18px] md:h-6 md:w-6 rounded-full border-2 flex justify-center place-items-center font-bold text-white`}/>
                                     </div>
                                     <div className="flex flex-col place-items-center">
                                         <p className="font-bold">3</p>
-                                        <button onClick={() => {handlePotensi('3')}} className={`${ AngkaPotensi == '3' || AngkaPotensi2 == '3' ? 'bg-[#0000FF]' : 'bg-gray-200'} h-[18px] w-[18px] md:h-6 md:w-6 rounded-full border-2 flex justify-center place-items-center font-bold text-white`}/>
+                                        <button onClick={() => {handlePotensi(3)}} className={`${ potensiAktif3 ? 'bg-[#0000FF]' : 'bg-gray-200'} h-[18px] w-[18px] md:h-6 md:w-6 rounded-full border-2 flex justify-center place-items-center font-bold text-white`}/>
                                     </div>
                                     <div className="flex flex-col place-items-center">
                                         <p className="font-bold">4</p>
-                                        <button onClick={() => {handlePotensi('4')}} className={`${ AngkaPotensi == '4' || AngkaPotensi2 == '4' ? 'bg-[#FFFF00]' : 'bg-gray-200'} h-[18px] w-[18px] md:h-6 md:w-6 rounded-full border-2 flex justify-center place-items-center font-bold text-white`}/>
+                                        <button onClick={() => {handlePotensi(4)}} className={`${ potensiAktif4 ? 'bg-[#FFFF00]' : 'bg-gray-200'} h-[18px] w-[18px] md:h-6 md:w-6 rounded-full border-2 flex justify-center place-items-center font-bold text-white`}/>
                                     </div>
                                     <div className="flex flex-col place-items-center">
                                         <p className="font-bold">5</p>
-                                        <button onClick={() => {handlePotensi('5')}} className={`${ AngkaPotensi == '5' || AngkaPotensi2 == '5' ? 'bg-[#FF00FF]' : 'bg-gray-200'} h-[18px] w-[18px] md:h-6 md:w-6 rounded-full border-2 flex justify-center place-items-center font-bold text-white`}/>
+                                        <button onClick={() => {handlePotensi(5)}} className={`${ potensiAktif5 ? 'bg-[#FF00FF]' : 'bg-gray-200'} h-[18px] w-[18px] md:h-6 md:w-6 rounded-full border-2 flex justify-center place-items-center font-bold text-white`}/>
                                     </div>
                                 </div>
                             }

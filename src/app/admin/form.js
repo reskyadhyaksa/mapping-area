@@ -21,8 +21,19 @@ export default function InputField() {
     const [ umurKepala, setUmurKepala ] = useState(null);
     const [ Alamat, setAlamat ] = useState('');
     const [ Koordinate, setKoordinate ] = useState('');
-    const [ AngkaPotensi, setAngkaPotensi ] = useState(null);
-    const [ AngkaPotensi2, setAngkaPotensi2 ] = useState(null);
+
+    const [ AngkaPotensi, setAngkaPotensi ] = useState('');
+    const [ AngkaPotensi2, setAngkaPotensi2 ] = useState('');
+    const [ AngkaPotensi3, setAngkaPotensi3 ] = useState('');
+    const [ AngkaPotensi4, setAngkaPotensi4 ] = useState('');
+    const [ AngkaPotensi5, setAngkaPotensi5 ] = useState('');
+
+    const [ potensiAktif, setPotensiAktif1 ] = useState(false);
+    const [ potensiAktif2, setPotensiAktif2 ] = useState(false);
+    const [ potensiAktif3, setPotensiAktif3 ] = useState(false);
+    const [ potensiAktif4, setPotensiAktif4 ] = useState(false);
+    const [ potensiAktif5, setPotensiAktif5 ] = useState(false);
+
     const [ finalPotensi, setFinalPotensi ] = useState(null);
     const [ RTrumah, setRTrumah ] = useState('RT01');
     
@@ -62,6 +73,18 @@ export default function InputField() {
                 setKoordinate('')
                 setAngkaPotensi(1)
                 setAnggotaFields([{ name: '', age: ''},])
+
+                setAngkaPotensi('')
+                setAngkaPotensi2('')
+                setAngkaPotensi3('')
+                setAngkaPotensi4('')
+                setAngkaPotensi5('')
+                setPotensiAktif1(false)
+                setPotensiAktif2(false)
+                setPotensiAktif3(false)
+                setPotensiAktif4(false)
+                setPotensiAktif5(false)
+
                 console.log('Data added successfully')
                 setMsgState('Berhasil Menambahkan Data...')
 
@@ -117,52 +140,109 @@ export default function InputField() {
     }
 
     const handlePotensi = (value) => {
-        if (AngkaPotensi === null) {
-            // If no button is active, activate the first button
-            setAngkaPotensi(value);
-        } else if (AngkaPotensi2 === null) {
-            // If only one button is active, activate the second button
-            setAngkaPotensi2(value);
-        } else {
-            // If two buttons are active, deactivate the earliest clicked button and activate the new button
-            setAngkaPotensi(AngkaPotensi2);
-            setAngkaPotensi2(value);
+        //! HANDLE AKTIF
+        if (value === 1){
+            setAngkaPotensi('1')
+            setPotensiAktif1(true)
+        } else if (value === 2){
+            setAngkaPotensi2('2')
+            setPotensiAktif2(true)
+        } else if (value === 3){
+            setAngkaPotensi3('3')
+            setPotensiAktif3(true)
+        } else if (value === 4){
+            setAngkaPotensi4('4')
+            setPotensiAktif4(true)
+        } else if (value === 5){
+            setAngkaPotensi5('5')
+            setPotensiAktif5(true)
+        }
+
+        //! HANDLE NONAKTIF
+        if (value === 1 && potensiAktif){
+            setPotensiAktif1(false)
+            setAngkaPotensi('')
+        } else if (value === 2 && potensiAktif2){
+            setPotensiAktif2(false)
+            setAngkaPotensi2('')
+        } else if (value === 3 && potensiAktif3){
+            setPotensiAktif3(false)
+            setAngkaPotensi3('')
+        } else if (value === 4 && potensiAktif4){
+            setPotensiAktif4(false)
+            setAngkaPotensi4('')
+        } else if (value === 5 && potensiAktif5){
+            setPotensiAktif5(false)
+            setAngkaPotensi5('')
         }
     };
 
     useEffect(() => {
-        if (AngkaPotensi === '1' && AngkaPotensi2 === '2') {
+        if (AngkaPotensi === '1' && AngkaPotensi2 === '2' && AngkaPotensi3 === '' && AngkaPotensi4 === '' && AngkaPotensi5 === '') {
             setFinalPotensi('3a');
-        } else if (AngkaPotensi === '1' && AngkaPotensi2 === '3' || AngkaPotensi === '3' && AngkaPotensi2 === '1') {
+        } else if (AngkaPotensi === '1' && AngkaPotensi2 === '' && AngkaPotensi3 === '3' && AngkaPotensi4 === '' && AngkaPotensi5 === '') {
             setFinalPotensi('4a');
-        } else if (AngkaPotensi === '1' && AngkaPotensi2 === '4' || AngkaPotensi === '4' && AngkaPotensi2 === '1') {
+        } else if (AngkaPotensi === '1' && AngkaPotensi2 === '' && AngkaPotensi3 === '' && AngkaPotensi4 === '4' && AngkaPotensi5 === '') {
             setFinalPotensi('5a');
-        } else if (AngkaPotensi === '1' && AngkaPotensi2 === '5' || AngkaPotensi === '5' && AngkaPotensi2 === '1') {
+        } else if (AngkaPotensi === '1' && AngkaPotensi2 === '' && AngkaPotensi3 === '' && AngkaPotensi4 === '' && AngkaPotensi5 === '5') {
             setFinalPotensi('6');
-        } else if (AngkaPotensi === '2' && AngkaPotensi2 === '3' || AngkaPotensi === '3' && AngkaPotensi2 === '2') {
+        } else if (AngkaPotensi === '' && AngkaPotensi2 === '2' && AngkaPotensi3 === '3' && AngkaPotensi4 === '' && AngkaPotensi5 === '') {
             setFinalPotensi('5b');
-        } else if (AngkaPotensi === '2' && AngkaPotensi2 === '4' || AngkaPotensi === '4' && AngkaPotensi2 === '2') {
+        } else if (AngkaPotensi === '' && AngkaPotensi2 === '2' && AngkaPotensi3 === '' && AngkaPotensi4 === '4' && AngkaPotensi5 === '') {
             setFinalPotensi('6b');
-        } else if (AngkaPotensi === '2' && AngkaPotensi2 === '5' || AngkaPotensi === '5' && AngkaPotensi2 === '2') {
+        } else if (AngkaPotensi === '' && AngkaPotensi2 === '2' && AngkaPotensi3 === '' && AngkaPotensi4 === '' && AngkaPotensi5 === '5') {
             setFinalPotensi('7');
-        } else if (AngkaPotensi === '3' && AngkaPotensi2 === '4' || AngkaPotensi === '4' && AngkaPotensi2 === '3') {
+        } else if (AngkaPotensi === '' && AngkaPotensi2 === '' && AngkaPotensi3 === '3' && AngkaPotensi4 === '4' && AngkaPotensi5 === '') {
             setFinalPotensi('7a');
-        } else if (AngkaPotensi === '3' && AngkaPotensi2 === '5' || AngkaPotensi === '5' && AngkaPotensi2 === '3') {
+        } else if (AngkaPotensi === '' && AngkaPotensi2 === '' && AngkaPotensi3 === '3' && AngkaPotensi4 === '' && AngkaPotensi5 === '5') {
             setFinalPotensi('8');
-        } else if (AngkaPotensi === '4' && AngkaPotensi2 === '5' || AngkaPotensi === '5' && AngkaPotensi2 === '4') {
+        } else if (AngkaPotensi === '' && AngkaPotensi2 === '' && AngkaPotensi3 === '' && AngkaPotensi4 === '4' && AngkaPotensi5 === '5') {
             setFinalPotensi('9');
-        } else if (AngkaPotensi === '1') {
+        } else if (AngkaPotensi === '1' && AngkaPotensi2 === '2' && AngkaPotensi3 === '3' && AngkaPotensi4 === '' && AngkaPotensi5 === '') {
+            setFinalPotensi('6c');
+        } else if (AngkaPotensi === '1' && AngkaPotensi2 === '2' && AngkaPotensi3 === '' && AngkaPotensi4 === '4' && AngkaPotensi5 === '') {
+            setFinalPotensi('7b');
+        } else if (AngkaPotensi === '1' && AngkaPotensi2 === '2' && AngkaPotensi3 === '' && AngkaPotensi4 === '' && AngkaPotensi5 === '5') {
+            setFinalPotensi('8a');
+        } else if (AngkaPotensi === '1' && AngkaPotensi2 === '' && AngkaPotensi3 === '3' && AngkaPotensi4 === '4' && AngkaPotensi5 === '') {
+            setFinalPotensi('9a');
+        } else if (AngkaPotensi === '1' && AngkaPotensi2 === '' && AngkaPotensi3 === '3' && AngkaPotensi4 === '' && AngkaPotensi5 === '5') {
+            setFinalPotensi('9b');
+        } else if (AngkaPotensi === '1' && AngkaPotensi2 === '' && AngkaPotensi3 === '' && AngkaPotensi4 === '4' && AngkaPotensi5 === '5') {
+            setFinalPotensi('10');
+        } else if (AngkaPotensi === '' && AngkaPotensi2 === '2' && AngkaPotensi3 === '3' && AngkaPotensi4 === '4' && AngkaPotensi5 === '') {
+            setFinalPotensi('9c');
+        } else if (AngkaPotensi === '' && AngkaPotensi2 === '2' && AngkaPotensi3 === '3' && AngkaPotensi4 === '' && AngkaPotensi5 === '5') {
+            setFinalPotensi('10a');
+        } else if (AngkaPotensi === '' && AngkaPotensi2 === '2' && AngkaPotensi3 === '' && AngkaPotensi4 === '4' && AngkaPotensi5 === '5') {
+            setFinalPotensi('11');
+        } else if (AngkaPotensi === '' && AngkaPotensi2 === '' && AngkaPotensi3 === '3' && AngkaPotensi4 === '4' && AngkaPotensi5 === '5') {
+            setFinalPotensi('12');
+        } else if (AngkaPotensi === '1' && AngkaPotensi2 === '2' && AngkaPotensi3 === '3' && AngkaPotensi4 === '4' && AngkaPotensi5 === '') {
+            setFinalPotensi('10b');
+        } else if (AngkaPotensi === '1' && AngkaPotensi2 === '2' && AngkaPotensi3 === '3' && AngkaPotensi4 === '' && AngkaPotensi5 === '5') {
+            setFinalPotensi('11a');
+        } else if (AngkaPotensi === '1' && AngkaPotensi2 === '2' && AngkaPotensi3 === '' && AngkaPotensi4 === '4' && AngkaPotensi5 === '5') {
+            setFinalPotensi('12a');
+        } else if (AngkaPotensi === '1' && AngkaPotensi2 === '' && AngkaPotensi3 === '3' && AngkaPotensi4 === '4' && AngkaPotensi5 === '5') {
+            setFinalPotensi('13');
+        } else if (AngkaPotensi === '' && AngkaPotensi2 === '2' && AngkaPotensi3 === '3' && AngkaPotensi4 === '4' && AngkaPotensi5 === '5') {
+            setFinalPotensi('14');
+        } else if (AngkaPotensi === '1' && AngkaPotensi2 === '2' && AngkaPotensi3 === '3' && AngkaPotensi4 === '4' && AngkaPotensi5 === '5') {
+            setFinalPotensi('15');
+        } else if (AngkaPotensi === '1' && AngkaPotensi2 === '' && AngkaPotensi3 === '' && AngkaPotensi4 === '' && AngkaPotensi5 === '') {
             setFinalPotensi('1');
-        } else if (AngkaPotensi === '2') {
+        } else if (AngkaPotensi2 === '' && AngkaPotensi2 === '2' && AngkaPotensi3 === '' && AngkaPotensi4 === '' && AngkaPotensi5 === '') {
             setFinalPotensi('2');
-        } else if (AngkaPotensi === '3') {
+        } else if (AngkaPotensi3 === '' && AngkaPotensi2 === '' && AngkaPotensi3 === '3' && AngkaPotensi4 === '' && AngkaPotensi5 === '') {
             setFinalPotensi('3');
-        } else if (AngkaPotensi === '4') {
+        } else if (AngkaPotensi4 === '' && AngkaPotensi2 === '' && AngkaPotensi3 === '' && AngkaPotensi4 === '4' && AngkaPotensi5 === '') {
             setFinalPotensi('4');
-        } else if (AngkaPotensi === '5') {
+        } else if (AngkaPotensi5 === '' && AngkaPotensi2 === '' && AngkaPotensi3 === '' && AngkaPotensi4 === '' && AngkaPotensi5 === '5') {
             setFinalPotensi('5');
         }
-    }, [AngkaPotensi, AngkaPotensi2])
+        console.log(finalPotensi)
+    }, [AngkaPotensi, AngkaPotensi2, AngkaPotensi3, AngkaPotensi4, AngkaPotensi5])
 
     return (
         <>
@@ -229,23 +309,23 @@ export default function InputField() {
                     <div className="flex flex-row justify-center gap-7">
                         <div className="flex flex-col place-items-center">
                             <p className="font-bold">1</p>
-                            <button onClick={() => {handlePotensi('1')}} className={`${ AngkaPotensi == '1' || AngkaPotensi2 == '1' ? 'bg-[#FF0000]' : 'bg-gray-200'} h-[18px] w-[18px] md:h-6 md:w-6 rounded-full border-2 flex justify-center place-items-center font-bold text-white`}/>
+                            <button onClick={() => {handlePotensi(1)}} className={`${ potensiAktif ? 'bg-[#FF0000]' : 'bg-gray-200'} h-[18px] w-[18px] md:h-6 md:w-6 rounded-full border-2 flex justify-center place-items-center font-bold text-white`}/>
                         </div>
                         <div className="flex flex-col place-items-center">
                             <p className="font-bold">2</p>
-                            <button onClick={() => {handlePotensi('2')}} className={`${ AngkaPotensi == '2' || AngkaPotensi2 == '2' ? 'bg-[#00FF00]' : 'bg-gray-200'} h-[18px] w-[18px] md:h-6 md:w-6 rounded-full border-2 flex justify-center place-items-center font-bold text-white`}/>
+                            <button onClick={() => {handlePotensi(2)}} className={`${ potensiAktif2 ? 'bg-[#00FF00]' : 'bg-gray-200'} h-[18px] w-[18px] md:h-6 md:w-6 rounded-full border-2 flex justify-center place-items-center font-bold text-white`}/>
                         </div>
                         <div className="flex flex-col place-items-center">
                             <p className="font-bold">3</p>
-                            <button onClick={() => {handlePotensi('3')}} className={`${ AngkaPotensi == '3' || AngkaPotensi2 == '3' ? 'bg-[#0000FF]' : 'bg-gray-200'} h-[18px] w-[18px] md:h-6 md:w-6 rounded-full border-2 flex justify-center place-items-center font-bold text-white`}/>
+                            <button onClick={() => {handlePotensi(3)}} className={`${ potensiAktif3 ? 'bg-[#0000FF]' : 'bg-gray-200'} h-[18px] w-[18px] md:h-6 md:w-6 rounded-full border-2 flex justify-center place-items-center font-bold text-white`}/>
                         </div>
                         <div className="flex flex-col place-items-center">
                             <p className="font-bold">4</p>
-                            <button onClick={() => {handlePotensi('4')}} className={`${ AngkaPotensi == '4' || AngkaPotensi2 == '4' ? 'bg-[#FFFF00]' : 'bg-gray-200'} h-[18px] w-[18px] md:h-6 md:w-6 rounded-full border-2 flex justify-center place-items-center font-bold text-white`}/>
+                            <button onClick={() => {handlePotensi(4)}} className={`${ potensiAktif4 ? 'bg-[#FFFF00]' : 'bg-gray-200'} h-[18px] w-[18px] md:h-6 md:w-6 rounded-full border-2 flex justify-center place-items-center font-bold text-white`}/>
                         </div>
                         <div className="flex flex-col place-items-center">
                             <p className="font-bold">5</p>
-                            <button onClick={() => {handlePotensi('5')}} className={`${ AngkaPotensi == '5' || AngkaPotensi2 == '5' ? 'bg-[#FF00FF]' : 'bg-gray-200'} h-[18px] w-[18px] md:h-6 md:w-6 rounded-full border-2 flex justify-center place-items-center font-bold text-white`}/>
+                            <button onClick={() => {handlePotensi(5)}} className={`${ potensiAktif5 ? 'bg-[#FF00FF]' : 'bg-gray-200'} h-[18px] w-[18px] md:h-6 md:w-6 rounded-full border-2 flex justify-center place-items-center font-bold text-white`}/>
                         </div>
                     </div>
                 </div> 
