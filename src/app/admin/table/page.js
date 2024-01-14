@@ -17,6 +17,7 @@ import InputField from "../form";
 import PopupInformation from "./add_information";
 import { doc, updateDoc } from "firebase/firestore";
 import { db } from "@/app/firebase/config";
+import { PieChart, pieArcLabelClasses } from "@mui/x-charts";
 
 
 
@@ -79,6 +80,14 @@ export default function PendudukPage() {
     const [ RTAsc, setRTAsc ] = useState(false);
     const [ alamatAsc, setAlamatAsc ] = useState(false);
     const [ koorAsc, setKoorAsc ] = useState(false);
+
+    const [ popPie, setPopPie ] = useState(false);
+    const [ pieData, setPieData ] = useState([]);
+
+    const size = {
+        width: 400,
+        height: 200,
+    };
 
     const fetchData = async () => {
         try {
@@ -258,12 +267,43 @@ export default function PendudukPage() {
 
     };
 
+    const countPotensi = async () => {
+        // Create an object to store counts
+        const countMap = {};
+        const categorizedData = [];
+        const result = await getAllData();
+    
+        // Iterate through the data and count occurrences
+        result.forEach(item => {
+            const potensi_temp = item.potensi;
+    
+            // Check if the property exists and is a string
+            if (potensi_temp && typeof potensi_temp === 'string') {
+                // Use the property value as the key in the count map
+                countMap[potensi_temp] = (countMap[potensi_temp] || 0) + 1;
+            }
+        });
+    
+        // Create an array with objects including id based on the order
+        Object.keys(countMap).forEach((potensi, index) => {
+            categorizedData.push({
+                potensi,
+                count: countMap[potensi],
+                id: index + 1,
+                value: countMap[potensi], // Add the value property
+            });
+        });
+    
+        console.log(categorizedData)
+        setPieData(categorizedData);
+    };
+
     useEffect(() => {
         if( sessionStorage.getItem('user') == null ) {
             router.push('/login')
         }
         fetchData();
-
+        countPotensi();
         // if ( selectedData.id != null ) {
         //     setSelectID(selectedData.id)
         //     setNamaKepala2(selectedData.namaKepala)
@@ -714,11 +754,27 @@ export default function PendudukPage() {
                 </div>
             }
 
+            {popPie && 
+                <div className="fixed bg-[#f3f3f3] left-[40%] top-[10%] px-5 rounded-md py-5">
+                    <PieChart
+                        series={[
+                            {
+                            pieData,
+                            highlightScope: { faded: 'global', highlighted: 'item' },
+                            faded: { innerRadius: 30, additionalRadius: -30, color: 'gray' },
+                            },
+                        ]}
+                        height={200}
+                    />
+                </div>
+            }
 
             
             <div className="py-5 px-16" id="test">
                 <button id="add" className="px-3 py-1 bg-[#232323] text-white rounded-md text-md"
                     onClick={() => setPopupAdd(true)}>Add data</button>
+                <button id="add" className="px-3 py-1 bg-[#232323] text-white rounded-md text-md ml-2"
+                    onClick={() => {setPopPie(true)}}>Show Pie Chart</button>
                 <button className="px-3 py-1 bg-[#232323] text-white rounded-md text-md ml-2 mb-2"
                     onClick={() => router.push('/admin')}>Back to maps</button>
                 <TableContainer component={Paper}>
